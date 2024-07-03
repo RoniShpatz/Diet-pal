@@ -9,7 +9,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
     <title>SignIn</title>
 </head>
-<body>
-    <p>sign in</p>
+<body class="bkg-body">
+    <div class="login-body">
+        <div>
+                <div class="login-enter-all">
+                    <img src="../static/images/logo copy.png">
+                    <div class="log-in-container">
+                        <h2>Sign In</h2>
+                        <form class="form-log-in">
+                            <input type="text" id="username" name="username" placeholder="username"><br>
+                            <input id="password" name="password" placeholder="password"><br>
+                            <input id="password" name="password" placeholder="re-enter password"><br>
+                            <button action="submit" value="submit" id="login-submit">Sign In</button>
+                        </form>
+                        <a href="{{url_for('log_in')}}">Log In</a>
+                    </div>
+                  
+            </div>
+        </div>
+    </div>
+    <img src="../static/images/cup copy.png" class="cup-img">
+    <img src="../static/images/food.png" class="food-img">
 </body>
 </html>

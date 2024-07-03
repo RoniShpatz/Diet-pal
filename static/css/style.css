@@ -43,8 +43,14 @@ body{
 #login-submit{
     position: relative;
     background-color: #206A5D;
-    color: #FFCC29;
+    color: white;
     cursor: pointer;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 15px;
+    font-size: 1rem;
+    margin-bottom: 2%;
+    overflow: hidden;
     
 }
 #login-submit:hover{
@@ -54,14 +60,21 @@ body{
 
 #login-submit::before{
     position: absolute;
-    content: "";
-    left: 0;
-    top: 0;
-    width: 100px;
+    content: '';
+    display: block;
+    left: -30px;
+    top: -40px;
+    width: 30px;
     height: 100px;
-    background-color: red;
+    background-color: #F58634;
+    filter: blur(5px);
+    transition: all 0.5s ease;
+  transform: translateX(0);
 }
-    
+#login-submit:hover::before{
+    transform: translateX(100px);
+    background-color: #ffffff;
+}    
 .cup-img {
     position: absolute;
     left: 10%;
