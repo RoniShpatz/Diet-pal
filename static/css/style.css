@@ -22,6 +22,9 @@ body{
 }
 .log-in-container {
    text-align: center;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
     
 }
 .log-in-container h2{
@@ -91,6 +94,68 @@ body{
     transform-origin: center;
     animation: food 70s 2s ease infinite alternate;
 }
+.input-layout{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+.password-btn {
+    display: flex;
+    justify-content: center;
+}
+.password-btn img{
+    border: none;
+    background-color: transparent;
+}
+.password-btn img:hover{
+    filter: saturate(5);
+    cursor: pointer;
+}
+.color-thumbnails {
+margin-bottom: 4%;
+display: flex;
+justify-content: space-around;
+align-items: center;
+
+ 
+}
+.thumbnail{
+    appearance: none;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+.thumbnail::before {
+    content: "";
+    width: 3em;
+    height: 3em;
+    position: absolute;
+}
+
+#green::before{
+    background-color: #206A5D;
+}
+#light-green::before {
+    background-color: #81B214;
+}
+#yellow::before {
+    background-color: #FFCC29;
+}
+#orange::before {
+    background-color: #F58634;
+}
+#blue::before {
+    background-color: #34dff5;
+}
+.thumbnail:checked:before{
+    border: solid rgb(149, 149, 149);
+    transform: scale(1.2);
+    box-shadow: 0 3px 7px 0 rgba(255, 255, 255, 0.13), 0 1px 2px 0 rgba(0, 0, 0, .11);
+}
+
+
 @keyframes cup {
    form {
      transform: rotate(0deg) translate(0px) scale(1);

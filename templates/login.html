@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+    <link rel="icon" href="../static/images/logo copy.png" type="image/icon type">
     <title>LogIn</title>
 </head>
 <body class="bkg-body">
@@ -16,12 +17,17 @@
                     <img src="../static/images/logo copy.png">
                     <div class="log-in-container">
                         <h2>Login</h2>
-                        <form class="form-log-in">
-                            <input type="text" id="username" name="username" placeholder="username"><br>
-                            <input id="password" name="password" placeholder="password"><br>
-                            <button action="submit" value="submit" id="login-submit">Submit</button>
+                        <form class="form-log-in" action="{{ url_for('login') }}"  method="POST">
+                            <div class="input-layout">
+                                <input type="text" id="username" name="username" placeholder="username" autocomplete="username" required><br>
+                                <div class="password-btn">
+                                    <input type="password" id="password" name="password" placeholder="password" autocomplete="new-password" class="password" required>
+                                    <img src="../static/images/eye.png" alt="eye-icon" id="show-password">
+                                </div>
+                            </div>
+                            <button type="submit" action="submit" value="submit" id="login-submit">Submit</button>
                         </form>
-                        <a href="{{url_for('sign_in')}}">Sign In</a>
+                        <a href="{{ url_for('signin') }}">Sign In</a>
                     </div>
                   
             </div>
@@ -29,5 +35,6 @@
     </div>
     <img src="../static/images/cup copy.png" class="cup-img">
     <img src="../static/images/food.png" class="food-img">
+    <script src="../static/js/login.js"></script>
 </body>
 </html>
