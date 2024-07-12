@@ -4,8 +4,6 @@ const inputPassword2 = document.getElementById("password-2");
 
 
 
-console.log(sinInColor)
-
 function toggleShow(){
     if (inputPassword2) {
         if (inputPassword.type == "password") {
@@ -27,4 +25,3 @@ function toggleShow(){
 
 
 btnShow.addEventListener("click", toggleShow)
-

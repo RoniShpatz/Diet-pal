@@ -1,8 +1,104 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block main %}
+<div class="home-layout">
+    <h1 class="home-h1" >Hi {{username}} what would you like to add:  </h1>
+    <div class="add-banner">
+        <div class="weight">
+            <h3>Weight</h3>
+            <form action="weight()" method="POST" class="weight-form">
+                <label>
+                  <p>Kg</p>
+                  <input type="radio" id="kg" name="weight" value="kg" class="kg-lb">
+                </label>
+                <label>
+                  <p>Lb</p>
+                  <input type="radio" id="lb" name="weight" value="lb" class="kg-lb">
+                </label>
+                <input type="number" id="weight-num" name="num">
+                <button type="submit" id="weight-submit-btn">Submit</button>
+                <button type="reset" id="weight-reset-btn">Reseat</button>
+            </form>
+        </div>
+        <div class="Meal">
+            <h3>Meals</h3>
+            <form action="meals()"  method="POST" class="meals-form">
+                <label for="meals">Choose favorite Meal or write below: (to edit the time press on it)</label><br>
+                <p id="now-time">00:00</p>
+                <div class="input-time">
+                  <input type="text" id="timeInput" maxlength="5" placeholder="HH:MM" oninput="formatTime(this)">
+                  <div class="watch-btn-div">
+                    <p id="submit-watch">Save</p>
+                    <p id="reset-watch">Reaset</p> 
+                  </div>
+                </div>
+                <select id="fav-meals" name="meals">
+                  <option value="2 slices of bread">Breakfast</option>
+                  <option value="Salat">Lunch</option>
+                  <option value="Chicken with rice and vegtables">Diner</option>
+                  <option value="Soup">Supper</option>
+                  <option value="add new meal"><a href="#">Add new meal</a></option>
+                </select><br>
+                <textarea id="iput-meal" name="meal" rows="4" cols="50" placeholder="Write what you ate here:"></textarea><br>
+                <button type="submit" id="meals-submit-btn">Submit</button>
+                <button type="reset" id="meals-reset-btn">Reseat</button>
+            </form>
+        </div>
+        <div class="water">
+          <h3>Water</h3>
+          <p>Choose quantity and press '+'</p>
+          <form class="water-form">
+            <labl>
+              <input type="radio" id="water-200" name="water" value="200" class="water-size">
+              <p>200ml</p>
+            </labl>
+            <label>
+              <input type="radio" id="water-350" name="water" value="350" class="water-size">
+              <p>350ml</p>
+            </label>
+            <label>
+              <input type="radio" id="water-450" name="water" value="450" class="water-size">
+              <p>450ml</p>
+            </label>
+            <button type="submit" id="add-water">+</button>
+            <button  type="reset" id="reset-water">-</button>
+          </form>
+          <img src="../static/images/cup-water.png" alt="cup of water" class="water-img-bkg">
+        </div>
+        <div class="workout">
+          <h3>Workout</h3>
+          <p>Choose workout or add custom one</p>
+          <form class="wokout-form">
+            <label>
+              <input type="radio" id="running" name="workout" value="running" class="choose-workout">
+              <img src="../static/images/running.png" alt="running icon">
+            </label>
+            <label>
+              <input type="radio" id="walking" name="workout" value="walking" class="choose-workout">
+              <img src="../static/images/walking.png" alt="walking icon">
+            </label>
+            <label>
+              <input type="radio" id="Swimming" name="workout" value="Swimming" class="choose-workout">
+              <img src="../static/images/swimming.png" alt="swimming icon">
+            </label>
+            <label>
+              <input type="radio" id="Pilates" name="workout" value="Pilates" class="choose-workout">
+              <img src="../static/images/pilates.png" alt="pilates icon">
+            </label>
+            <input type="text" id="add-custom-workout">
+            <button type="submit" id="add-workout">+</button>
+            <button  type="reset" id="reset-workout">-</button>
+          </form>
 
-<h1>Hi {{username}} what would you like to add:  </h1>
+        </div>
 
+    </div>
+
+
+
+
+    <img src="../static/images/home-banner.png" alt="food banner" class="img-banner">
+</div>
+<script src="../static/js/home.js"></script>
 
 {%endblock%}

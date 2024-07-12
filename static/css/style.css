@@ -1,10 +1,11 @@
-/* login style */
+/* login signin style */
 body{
     background-image:  
     linear-gradient(90deg, white 0%, #f2f9e2 50%, #e4faf6 100%);
     position: relative;
     font-family: "Roboto Flex", sans-serif;
     perspective: 100px;
+  
     
 }
 .login-body{
@@ -150,9 +151,10 @@ align-items: center;
     background-color: #34dff5;
 }
 .thumbnail:checked:before{
-    border: solid rgb(149, 149, 149);
-    transform: scale(1.2);
+    border: solid rgb(225, 225, 225);
+    transform: scale(1.1);
     box-shadow: 0 3px 7px 0 rgba(255, 255, 255, 0.13), 0 1px 2px 0 rgba(0, 0, 0, .11);
+    z-index: 4;
 }
 
 
@@ -172,3 +174,98 @@ align-items: center;
      transform: rotate(-30deg) translate(-10px) scale(1.3);
     }
  }
+
+/* base style */
+
+header {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2%;
+}
+.profile-img{
+    border-radius: 50%;
+    padding: 1%;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ 
+}
+
+.profile-img p {
+    font-size: 3.5rem;
+    color: white;
+    font-weight: 600;
+
+        
+}
+header div a{
+    text-decoration: none;
+    color: #206A5D;
+}
+header div {
+    position: relative;
+}
+header div img{
+    cursor: pointer;
+}
+#logo-popup {
+    display: none;
+    position: absolute;
+    font-size: 1.5rem;
+    left: 10%;
+    top: 100%;
+   text-decoration: none; 
+   text-align: center;
+   list-style-type: none;
+   background-color: rgba(255, 255, 255, 0.8);
+   border-radius: 20px;
+   padding: 0.5rem;
+   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.075);
+   transform: scaleY(1);
+   z-index: 100;
+}
+#logo-popup a:hover{
+    cursor: pointer;
+    color: #F58634;
+    
+}
+#logo-menu:hover{
+    filter: drop-shadow(0 0 0.75rem rgb(207, 207, 207)); 
+}
+#div-username-letter:hover {
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0px -25px 20px -20px rgba(0, 0, 0, 0.45), 25px 0 20px -20px rgba(0, 0, 0, 0.45), 0px 25px 20px -20px rgba(0, 0, 0, 0.45), -25px 0 20px -20px rgba(0, 0, 0, 0.45);  
+}
+#div-username-letter:hover p{
+    transform: scale(1.1);
+    box-shadow: 0px 9px 30px rgba(255, 255, 255, 0.1);
+}
+
+/* home style */
+.home-layout{
+    height: 100vh;
+    position: relative;
+    
+}
+.home-h1{
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #206A5D;
+    margin-top: 5%;
+   
+}
+.img-banner{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+}
