@@ -16,6 +16,7 @@ colors = ["#206A5D", "#81B214", "#FFCC29", "#F58634"]
 weight_input = []
 meals_list = []
 water_list = []
+workout_list =[]
 
 
 app = Flask(__name__)
@@ -131,6 +132,21 @@ def water():
         }
         water_list.append(response_data)
         print(water_list)
+        return jsonify(response_data)
+
+@app.route("/workout", methods = ["POST"])
+def workout():
+        data = request.get_json()
+        workout_type = data.get('workout_type')
+        time = data.get('time')
+        date = data.get('date')
+        response_data = {
+            "wokout-type" : workout_type,
+            "time": time,
+            "date" : date
+        }
+        workout_list.append(response_data)
+        print(workout_list)
         return jsonify(response_data)
 
 

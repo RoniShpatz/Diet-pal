@@ -47,6 +47,7 @@ weightForm.addEventListener("submit", (e) => {
        
     } else { 
         let para = document.createElement("p")
+        para.classList.add("fill-in-form")
         para.innerText = "Fill in all form, and than press submit"
         weightForm.appendChild(para)
         setTimeout(() => {
@@ -112,11 +113,12 @@ timeNow.addEventListener("click", () => {
 })
 
 changeTime.addEventListener("click", () => {
-    let newTime = inputTime.value
-    console.log(inputTime)
-    timeNow.innerHTML = newTime
-    inputTimeDiv.style.display = "none"
-    isWatchShow = false
+    if (inputTime.value) {
+        let newTime = inputTime.value
+        timeNow.innerHTML = newTime
+        inputTimeDiv.style.display = "none"
+        isWatchShow = false
+    }
 })
 
 resetTime.addEventListener("click", () => {
@@ -150,6 +152,7 @@ submitMeal.addEventListener("click", (e) => {
        
     } else { 
         let para = document.createElement("p")
+        para.classList.add("fill-in-form")
         para.innerText = "Fill in all form, and than press submit"
         mealForm .appendChild(para)
         setTimeout(() => {
@@ -165,7 +168,7 @@ submitMeal.addEventListener("click", (e) => {
 const waterQuantity = document.querySelectorAll(".water-size")
 const sbmitWater = document.querySelector("#add-water")
 const waterForm = document.querySelector(".water-form")
-console.log(waterQuantity)
+// console.log(waterQuantity)
 
 function getWaterValue() {
     let value = "";
@@ -201,6 +204,7 @@ sbmitWater.addEventListener("click", (e) => {
        
     } else { 
         let para = document.createElement("p")
+        para.classList.add("fill-in-form")
         para.innerText = "Fill in all form, and than press submit"
         waterForm.appendChild(para)
         setTimeout(() => {
@@ -208,4 +212,59 @@ sbmitWater.addEventListener("click", (e) => {
             }, 2000)
         
     }
+}  )
+
+// workout script
+
+const chooseWorkout = document.querySelectorAll(".choose-workout")
+const wokoutForm = document.querySelector(".wokout-form")
+const costumInput = document.querySelector("#add-custom-workout")
+const workoutSubmit = document.querySelector("#add-workout")
+
+function getWokoutValue() {
+    let value = "";
+    chooseWorkout.forEach(input => {
+        if(input.checked) {
+            value = input.value;
+        }
+    }); return value;
+}
+
+
+workoutSubmit.addEventListener("click", (e) => {
+    let workout = getWokoutValue()
+    if (!workout) {
+        workout = costumInput.value
+    } 
+    let time = getTime()
+    e.preventDefault()
+    if (time && workout) {
+        data = {
+           workout_type : workout,
+           time:  timeNow.innerHTML,
+           date: getDate()
+        }
+        dataJson = JSON.stringify(data)
+        console.log(dataJson)
+        fetch("/workout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: dataJson
+        })
+        .then((r)=> r.json()) 
+        .then((data) => console.log(data))
+       
+    } else { 
+        let para = document.createElement("p")
+        para.classList.add("fill-in-form")
+        para.innerText = "Fill in all form, and than press submit"
+        wokoutForm.appendChild(para)
+        setTimeout(() => {
+            wokoutForm.removeChild(para)
+            }, 2000)
+        
+    }
+    costumInput.value = ""
 }  )

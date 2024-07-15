@@ -2,25 +2,29 @@
 {% block title %}Home{% endblock %}
 {% block main %}
 <div class="home-layout">
-    <h1 class="home-h1" >Hi {{username}} what would you like to add:  </h1>
+    <h1 class="home-h1" style="color: {{color}};">Hi {{username}} what would you like to add:  </h1>
     <div class="add-banner">
-        <div class="weight">
+        <div class="weight form">
             <h3>Weight</h3>
             <form action="weight()" method="POST" class="weight-form">
-                <label>
-                  <p>Kg</p>
+              <div>
+                <label for="kg">
                   <input type="radio" id="kg" name="weight" value="kg" class="kg-lb">
+                  <p id="p-kg">Kg</p>
                 </label>
-                <label>
-                  <p>Lb</p>
+                <label for="lb">
                   <input type="radio" id="lb" name="weight" value="lb" class="kg-lb">
+                  <p id="p-lb">Lb</p>
                 </label>
+              </div>
                 <input type="number" id="weight-num" name="num">
-                <button type="submit" id="weight-submit-btn">Submit</button>
-                <button type="reset" id="weight-reset-btn">Reseat</button>
+                <div id="btn-weight">
+                  <button type="submit" id="weight-submit-btn">Submit</button>
+                  <button type="reset" id="weight-reset-btn">Reseat</button>
+                </div>
             </form>
         </div>
-        <div class="Meal">
+        <div class="meal form">
             <h3>Meals</h3>
             <form action="meals()"  method="POST" class="meals-form">
                 <label for="meals">Choose favorite Meal or write below: (to edit the time press on it)</label><br>
@@ -39,55 +43,63 @@
                   <option value="Soup">Supper</option>
                   <option value="add new meal"><a href="#">Add new meal</a></option>
                 </select><br>
-                <textarea id="iput-meal" name="meal" rows="4" cols="50" placeholder="Write what you ate here:"></textarea><br>
-                <button type="submit" id="meals-submit-btn">Submit</button>
-                <button type="reset" id="meals-reset-btn">Reseat</button>
+                <textarea id="iput-meal" name="meal" rows="4" cols="25" placeholder="Write what you ate here:"></textarea><br>
+                <div id="btn-meals">
+                  <button type="submit" id="meals-submit-btn">Submit</button>
+                  <button type="reset" id="meals-reset-btn">Reseat</button>
+                </div>
             </form>
         </div>
-        <div class="water">
+        <div class="water form">
           <h3>Water</h3>
           <p>Choose quantity and press '+'</p>
           <form class="water-form">
-            <labl>
+            <labl class="water-size">
               <input type="radio" id="water-200" name="water" value="200" class="water-size">
               <p>200ml</p>
             </labl>
-            <label>
+            <label class="water-size">
               <input type="radio" id="water-350" name="water" value="350" class="water-size">
               <p>350ml</p>
             </label>
-            <label>
+            <label class="water-size">
               <input type="radio" id="water-450" name="water" value="450" class="water-size">
               <p>450ml</p>
             </label>
-            <button type="submit" id="add-water">+</button>
-            <button  type="reset" id="reset-water">-</button>
+            <div class="water-btn">
+              <button type="submit" id="add-water">+</button>
+              <button  type="reset" id="reset-water">-</button>
+            </div>
           </form>
           <img src="../static/images/cup-water.png" alt="cup of water" class="water-img-bkg">
         </div>
-        <div class="workout">
+        <div class="workout form">
           <h3>Workout</h3>
           <p>Choose workout or add custom one</p>
           <form class="wokout-form">
-            <label>
-              <input type="radio" id="running" name="workout" value="running" class="choose-workout">
-              <img src="../static/images/running.png" alt="running icon">
-            </label>
-            <label>
-              <input type="radio" id="walking" name="workout" value="walking" class="choose-workout">
-              <img src="../static/images/walking.png" alt="walking icon">
-            </label>
-            <label>
-              <input type="radio" id="Swimming" name="workout" value="Swimming" class="choose-workout">
-              <img src="../static/images/swimming.png" alt="swimming icon">
-            </label>
-            <label>
-              <input type="radio" id="Pilates" name="workout" value="Pilates" class="choose-workout">
-              <img src="../static/images/pilates.png" alt="pilates icon">
-            </label>
+            <div>
+              <label>
+                <input type="radio" id="running" name="workout" value="running" class="choose-workout">
+                <img src="../static/images/running.png" alt="running icon">
+              </label>
+              <label>
+                <input type="radio" id="walking" name="workout" value="walking" class="choose-workout">
+                <img src="../static/images/walking.png" alt="walking icon">
+              </label>
+              <label>
+                <input type="radio" id="Swimming" name="workout" value="Swimming" class="choose-workout">
+                <img src="../static/images/swimming.png" alt="swimming icon">
+              </label>
+              <label>
+                <input type="radio" id="Pilates" name="workout" value="Pilates" class="choose-workout">
+                <img src="../static/images/pilates.png" alt="pilates icon">
+              </label>
+            </div>
             <input type="text" id="add-custom-workout">
-            <button type="submit" id="add-workout">+</button>
-            <button  type="reset" id="reset-workout">-</button>
+            <div class="btn-workout">
+              <button type="submit" id="add-workout">+</button>
+              <button  type="reset" id="reset-workout">-</button>
+            </div>
           </form>
 
         </div>
@@ -97,7 +109,9 @@
 
 
 
-    <img src="../static/images/home-banner.png" alt="food banner" class="img-banner">
+    <div class="img-banner">
+      <img src="../static/images/home-banner.png" alt="food banner" class="bkg-image">
+    </div>
 </div>
 <script src="../static/js/home.js"></script>
 
