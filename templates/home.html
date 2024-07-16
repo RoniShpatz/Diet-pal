@@ -37,12 +37,13 @@
                   </div>
                 </div>
                 <select id="fav-meals" name="meals">
-                  <option value="2 slices of bread">Breakfast</option>
-                  <option value="Salat">Lunch</option>
-                  <option value="Chicken with rice and vegtables">Diner</option>
-                  <option value="Soup">Supper</option>
-                  <option value="add new meal"><a href="#">Add new meal</a></option>
+                  {%for meal in meals %}
+                    {%for meal_name, meal_value in meal.items()%}
+                      <option value="{{meal_value}}">{{meal_name}}</option>
+                    {%endfor%}
+                  {%endfor%}
                 </select><br>
+                <a href="{{url_for('add_meal')}}">Edit meals</a>
                 <textarea id="iput-meal" name="meal" rows="4" cols="25" placeholder="Write what you ate here:"></textarea><br>
                 <div id="btn-meals">
                   <button type="submit" id="meals-submit-btn">Submit</button>

@@ -479,6 +479,18 @@ header div img{
     color: #206A5D;
 
 }
+
+.meals-form a{
+    color: #81B214;
+    text-decoration: none;
+    margin-bottom: 3%;
+}
+
+.meals-form a:hover{
+    color: #F58634;
+    font-weight: 600;
+}
+
 #iput-meal {
     border: dotted #F58634;
     border-radius: 15px;

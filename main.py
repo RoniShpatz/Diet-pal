@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import secrets
+import logging 
 
 secret_key = secrets.token_hex(16)
 
@@ -17,6 +18,10 @@ weight_input = []
 meals_list = []
 water_list = []
 workout_list =[]
+favorite_meals = [{"Breakfast": "2 slices of bread"},
+                   {"Lunch": "Salat"},
+                   {"Dinner": "Chicken with rice and vegtables"},
+                   {"Supper": "tomato soap"}]
 
 
 app = Flask(__name__)
@@ -84,7 +89,7 @@ def home():
         color = session['color']
         if profile.isalpha():
             profile = profile.upper()
-        return render_template("home.html", username = username, profile = profile, color = color)
+        return render_template("home.html", username = username, profile = profile, color = color, meals = favorite_meals)
     else: 
         return redirect(url_for("login"))
 
@@ -115,8 +120,8 @@ def meals():
             "time": time,
             "date" : date
         }
-        meals_list.append(response_data)
-        print(meals_list)
+        favorite_meals.append(response_data)
+        print(favorite_meals)
         return jsonify(response_data)
 
 @app.route("/water", methods = ["POST"])
@@ -148,6 +153,38 @@ def workout():
         workout_list.append(response_data)
         print(workout_list)
         return jsonify(response_data)
+
+
+@app.route("/add_meal")
+def add_meal():
+        if 'username' in session:
+            username = session["username"]
+            profile = session['profile']
+            color = session['color']
+            if profile.isalpha():
+                profile = profile.upper()
+                return  render_template("add_meal.html", username = username, profile = profile, color = color, meals = favorite_meals)
+        else: 
+            return redirect(url_for("login"))
+        
+@app.route("/meal_edited", methods=["POST"])
+def meal_edited():
+    try:
+         data =request.get_json()
+         print(data)
+         if not isinstance(data, list):
+              raise ValueError("Expecting a list of meals")
+         favorite_meals =[]
+         for item in data:
+              name = item.get('name')
+              content = item.get("content")
+              favorite_meals.append({"name": name, "content": content})
+         logging.debug(f"Received Meals List: {favorite_meals}")
+         return jsonify(favorite_meals)
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+        return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == "__main__":
