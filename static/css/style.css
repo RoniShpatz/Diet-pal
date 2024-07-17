@@ -658,3 +658,64 @@ header div img{
 #reset-workout:hover{
     background-color: #206A5D;
 }
+/* add favorite meals style */
+
+.div-edit-meals-container {
+   margin-left: auto;
+   margin-right: auto;
+   text-align: center;
+   width: 70%;
+}
+.div-edit-meals-container p {
+    display: inline-block;
+    font-size: 1.2rem;
+}
+.div-edit-meals-container p.para-name{
+    color: #F58634;
+    font-weight: 600;
+    
+}
+.div-edit-meals-container p.para-content{
+    color: #206A5D;
+    margin-left: 2%;
+}
+#list-of-melas {
+    background-color: rgb(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+    padding: 2%;
+}
+#list-of-melas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#list-of-melas li{
+    list-style: none;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(255, 255, 255, 0.4);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+    border-radius: 10px;
+    padding: 1%;
+}
+.div-edit-meals-container li p.para-content{
+    color: black;
+    text-align: center;
+}
+.div-edit-meals-container li input {
+    display: none;
+    font-size: 1.2rem;
+    border: none;
+    background-color: transparent;
+}
+.div-edit-meals-container li {
+    position: relative;
+}
+.div-edit-meals-container li .input-name{
+    position: absolute;
+    left: 7%;
+    top: 30%;
+}

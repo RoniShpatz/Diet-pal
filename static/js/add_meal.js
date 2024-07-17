@@ -1,102 +1,40 @@
-const mealList = document.querySelectorAll(".meal-item p span")
-const mealBottonsList =  document.querySelectorAll(".meal-item span")
-const inputMealList = document.querySelectorAll(".meal-item input")
-const spanSubmitMeal = document.querySelectorAll(".span-submit")
-const spanDeleteMeal = document.querySelectorAll(".span-delete")
-const submitMeals = document.querySelector("#submit-meal")
-const inputNewNameMeal = document.querySelector("#new-meal-name")
-const iputNeaMealContent = document.querySelector("#nea-meal-content")
-const formAddMeal = document.querySelector(".edit-meal")
+let meals = [];
 
 
-isClicked = false
-let meals = []
+document.addEventListener("DOMContentLoaded", () => {
+    meals = meals_favorites;  
+    createMealList()
+});
 
-
-inputMealList.forEach(input => {
-    input.style.display = "none"
-})
-
-spanSubmitMeal.forEach(span => {
-    span.style.display = "none"
-})
-
-spanDeleteMeal.forEach(span => {
-    span.style.display = "none"
-})
-
-
-mealList.forEach (meal => {
-    meal.addEventListener("click", () => {
-        const mealClassName = meal.className
-        const spanMeal = document.querySelectorAll(`.meal-item p .${mealClassName}`)
-        const inputName = document.querySelector(`.meal-name-${mealClassName}`)
-        const inputContent = document.querySelector(`.meal-content-${mealClassName}`)
-        const submitSpan = document.querySelector(`.meal-item .span-submit.${mealClassName}`)
-        const deleteSpan = document.querySelector(`.meal-item .span-delete.${mealClassName}`)
-        inputName.value = spanMeal[0].innerText
-        inputContent.value = spanMeal[1].innerText
-        if (!isClicked) {
-            submitSpan.style.display = "inline-block"
-            deleteSpan.style.display = "inline-block"
-            inputName.style.display = "inline-block"
-            inputContent.style.display ="inline-block"
-            isClicked = true;
-        } else {
-            submitSpan.style.display = "none"
-            deleteSpan.style.display = "none"
-            inputName.style.display = "none"
-            inputContent.style.display ="none"
-            isClicked = false
+function updateList(name, content, count) {
+    mealContainer.innerHTML = '';
+    if (count < 0 || count >= meals.length){
+        return
+    } else {
+        const oldKey = Object.keys(meals[count])[0];
+        if (oldKey) {
+            delete meals[count][oldKey]
         }
-        submitSpan.addEventListener("click", () => {
-            if (inputName.value && inputContent.value) {
-                spanMeal[0].innerText = inputName.value
-                spanMeal[1].innerText = inputContent.value
-                submitSpan.style.display = "none"
-                deleteSpan.style.display = "none"
-                inputName.style.display = "none"
-                inputContent.style.display ="none"
-                isClicked = false
-            }
-        })
-        deleteSpan.addEventListener("click", () => {
-            const listItemMeal = document.querySelector(`ul .meal-item.${mealClassName}`)
-            listItemMeal.remove()
-            submitSpan.style.display = "none"
-            deleteSpan.style.display = "none"
-            inputName.style.display = "none"
-            inputContent.style.display ="none"
-            isClicked = false
-        })
-    })
-})
-
-function mealsObjects(arry) {
-    let newMeals = []
-   for (let i = 0; i < arry.length ; i+= 2) {
-    let name = arry[i].innerText
-    let content = arry[i + 1].innerText
-    let newMeal = {name: name, content: content}
-    newMeals.push(newMeal)
-   } 
-   return newMeals
+        meals[count][name] = content;
+    }
 }
 
-
-
-submitMeals.addEventListener("click", (e) => {
-    e.preventDefault()
-    let newNameMeal = inputNewNameMeal.value
-    let newContentMeal = iputNeaMealContent.value
-    let newMeal = {name: newNameMeal, content: newContentMeal}
+function deleteItemFormList(count) {
+    mealContainer.innerHTML = '';
+    if (count < 0 || count >= meals.length){
+        return
     
-    meals.push(newMeal)
-    // console.log(meals)
-    if (newContentMeal && newContentMeal) {
-        data = meals;
-        dataJson = JSON.stringify(data);
-        // console.log(dataJson);
+    } else {
+        meals.splice(count, 1);
+    }
+}
+
+function updateFlask(arry) {
+    const updateMeal = arry
+    if (updateMeal) {
+        data = updateMeal
+        dataJson = JSON.stringify(data)
+        console.log(dataJson)
         fetch("/meal_edited", {
             method: "POST",
             headers: {
@@ -105,26 +43,128 @@ submitMeals.addEventListener("click", (e) => {
             body: dataJson
         })
         .then((r) => r.json())
-        .then((data) => {
-            console.log(data)
-            meals = data
-        })
-        .catch((error) => console.error('Error:', error));
+        .then((data) => console.log(data))
+    } else {
+        console.log("no update meal")
+    }
+}
+
+
+const mealContainer = document.querySelector("#list-of-melas");
+
+function createItemMeal(key, content) {
+    const listItem = document.createElement("li");
+    const paraNameItem = document.createElement("p");
+    paraNameItem.innerText = key + ":";
+    paraNameItem.classList.add("para-name")
+
+    const inputName = document.createElement("input")
+    inputName.classList.add("input-name")
+    inputName.value = key
+    
+
+    const contentParaItem = document.createElement("p");
+    contentParaItem.innerText = content;
+    contentParaItem.classList.add("para-content")
+
+    const inputcontent = document.createElement("input");
+    inputcontent.classList.add("input-content")
+    inputcontent.value = content
+
+    
+
+    const deleteSpanItem = document.createElement("span");
+    deleteSpanItem.innerHTML = "&#10005;";
+    deleteSpanItem.classList.add("delet-item") 
+
+    const submitSpanItem = document.createElement("span");
+    submitSpanItem.innerHTML = "&#10004;";
+    submitSpanItem.classList.add("submit-item")
+
+    listItem.appendChild(paraNameItem);
+    listItem.appendChild(contentParaItem);
+    listItem.appendChild(inputName );
+    listItem.appendChild(inputcontent );
+    listItem.appendChild(submitSpanItem);
+    listItem.appendChild(deleteSpanItem);
+    return listItem;
+}
+
+function createMealList() {
+    let count = 0
+    meals.forEach(meal=> {
+        for (let key in meal) {
+            const newlistItem = createItemMeal(key, meal[key]);
+            newlistItem.classList.add("item");
+            newlistItem.classList.add(`list-${count}`)
+            mealContainer.appendChild(newlistItem);
+        }
+       
+        const inputName = document.querySelector(`.list-${count} .input-name`)
+        const inputContent =document.querySelector(`.list-${count} .input-content`)
+        const deleteItem = document.querySelector(`.list-${count} .delet-item`)
+        const submitItem = document.querySelector(`.list-${count} .submit-item`)
+        const number = count
+        if (deleteItem) {
+            deleteItem.addEventListener("click", () => {
+                deleteItemFormList(number)
+                createMealList()
+                updateFlask(meals)
+                console.log(meals);
+            })
+        }
+        if (submitItem) {
+            submitItem.addEventListener("click", () => {
+                console.log(number)
+                if (inputName.value && inputContent.value) {
+                    let name = inputName.value;
+                    let content = inputContent.value;
+                    updateList(name, content, number);
+                    createMealList()
+                    updateFlask(meals)
+                    console.log(meals);
+                }
+            })
+        }
+        count += 1   
+    });
+}
+
+const addBtn = document.querySelector("#submit-meal")
+const inputNewName = document.querySelector("#new-meal-name")
+const inputNewContent = document.querySelector("#input-new-content")
+const resetBtn = document.querySelector("#reset-mael")
+
+addBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    const name = inputNewName.value
+    const content = inputNewContent.value
+    const newMeal = {}
+    newMeal[name] = content
+    if (name && content) {
+        meals.push(newMeal)
+        mealContainer.innerHTML = '';
+        createMealList()
+        updateFlask(meals)
+        inputNewName.value = ""
+        inputNewContent.value = ""
     } else {
         let para = document.createElement("p")
         para.classList.add("fill-in-form")
         para.innerText = "Fill in all form, and than press submit"
-        formAddMeal.appendChild(para)
+        const divContainer = document.querySelector(".div-edit-meals-container")
+        divContainer.appendChild(para)
         setTimeout(() => {
-            formAddMeal.removeChild(para)
+            divContainer.removeChild(para)
             }, 2000)
     }
-    inputNewNameMeal.value = ""
-    iputNeaMealContent.value =""
     
+    console.log(meals)
 })
 
-
-
-
+resetBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+        inputNewName.value = ""
+        inputNewContent.value = ""
+})
 

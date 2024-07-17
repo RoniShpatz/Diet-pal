@@ -1,39 +1,31 @@
 {% extends "base.html" %}
 {% block title %}Add Meal{% endblock %}
 {% block main %}
+<div class="div-edit-meals-container">
+    <h1 style="color: {{color}};"> {{username}}, You can edit Meals:</h1>
 
-<h1> {{username}}, You can edit Meals:</h1>
-<form action="edit_meal()" method="POST" class="edit-meal">
-    <ul>
-        {%for meal in meals %}
-        <li class="meal-item meal-{{ loop.index }}">
-            <p><span class="meal-{{ loop.index }}">
-                {%for meal_name, meal_value in meal.items()%}
-                {{meal_name}} </span> 
-                   {%endfor%}
-                   :
-                <span class="meal-{{ loop.index }}">
-                {%for meal_name, meal_value in meal.items()%}
-                    {{meal_value}}</span>
-                {%endfor%}
-            </p>
-            <input class="meal-name-meal-{{ loop.index }}"> 
-            <input class="meal-content-meal-{{ loop.index }}">
-            <span class="span-submit meal-{{ loop.index }}"> &#10004;</span>
-            <span class="span-delete meal-{{ loop.index }}">&#10006;</span>
-        </li>
-      {%endfor%}
-      <div>
-        <li><input placeholder="Meal Name" id="new-meal-name"><span> : </span><input placeholder="Meal content" id="">
-            <button type="submit" id="submit-meal">Add</button>
-            <button type="reset">reset</button>
-        </li>
-      </div>
-    </ul>
-
-</form>
+    <form action="edit_meal()" method="POST" class="edit-meal">
+          <ul id="list-of-melas">
+    
+         
+          
+    
+        </ul>
+        <div>
+            <div><input placeholder="Meal Name" id="new-meal-name"><span> : </span><input placeholder="Meal content" id="input-new-content">
+                <button type="submit" id="submit-meal">Add</button>
+                <button type="reset" id="reset-mael">reset</button>
+            </div>
+          </div>
+    
+    </form>
+    
+</div>
 
 
 
-<script src="../static/js/add_meal.js"></script>
+<script>
+    const meals_favorites = {{ meals|tojson }}
+</script>
+<script src="{{url_for('static', filename='js/add_meal.js')}}"></script>
 {%endblock%}

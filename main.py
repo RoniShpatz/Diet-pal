@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import secrets
-import logging 
+
 
 secret_key = secrets.token_hex(16)
 
@@ -10,7 +10,12 @@ users =[{
     "name": "roni", 
     "password": "1234", 
     "color": "#206A5D"
-    }]
+    },{
+    "name": "w", 
+    "password": "1", 
+    "color": "#206A5D"
+    }
+    ]
 
 colors = ["#206A5D", "#81B214", "#FFCC29", "#F58634"]
 
@@ -27,6 +32,8 @@ favorite_meals = [{"Breakfast": "2 slices of bread"},
 app = Flask(__name__)
 
 app.secret_key = secret_key
+
+
 
 def checkUser(username, password):
     for name in users:
@@ -120,8 +127,8 @@ def meals():
             "time": time,
             "date" : date
         }
-        favorite_meals.append(response_data)
-        print(favorite_meals)
+        meals_list.append(response_data)
+        print(meals_list)
         return jsonify(response_data)
 
 @app.route("/water", methods = ["POST"])
@@ -163,27 +170,22 @@ def add_meal():
             color = session['color']
             if profile.isalpha():
                 profile = profile.upper()
-                return  render_template("add_meal.html", username = username, profile = profile, color = color, meals = favorite_meals)
+            return  render_template("add_meal.html", username = username, profile = profile, color = color, meals = favorite_meals)
         else: 
             return redirect(url_for("login"))
         
 @app.route("/meal_edited", methods=["POST"])
 def meal_edited():
-    try:
-         data =request.get_json()
-         print(data)
-         if not isinstance(data, list):
-              raise ValueError("Expecting a list of meals")
-         favorite_meals =[]
-         for item in data:
-              name = item.get('name')
-              content = item.get("content")
-              favorite_meals.append({"name": name, "content": content})
-         logging.debug(f"Received Meals List: {favorite_meals}")
-         return jsonify(favorite_meals)
-    except Exception as e:
-        logging.error(f"An error occurred: {e}")
-        return jsonify({"error": str(e)}), 500
+        global favorite_meals
+        data = request.get_json()
+        favorite_meals = data
+        print(favorite_meals)
+        response_data = {
+             "massage": "Favorite meals updated successfully",
+             "data": favorite_meals
+        }
+        return jsonify(response_data)
+ 
 
 
 
