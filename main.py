@@ -33,34 +33,10 @@ def get_user_color(username):
     return None 
 
 def get_user_fav_meals(username):
-    for user in users:
-        if user["name"] == username:
-            return user["fav_meals"]
-    return [{"no fav meals yet": "true"}]
-
-def get_user_water(username):
      for user in users:
-          if user["name"] == username:
-               return user["water"]
-     return []
-
-def get_user_weight(username):
-    for user in users:
-          if user["name"] == username:
-               return user["weight"]
-    return []
-
-def get_user_meals(username):
-    for user in users:
-          if user["name"] == username:
-               return user["meals"]
-    return []
-
-def get_user_workout(username):
-    for user in users:
-          if user["name"] == username:
-               return user["workout"]
-    return []
+          if user['name'] == username:
+               return user["fav_meals"]
+     return [{"no meals yet": "true"}]
 
 
 @app.route("/")
@@ -77,12 +53,8 @@ def login():
             session['username'] = name
             session['profile'] = name[0]
             session["color"] = get_user_color(name)
-            session["fav_meals"] = get_user_fav_meals(name)
-            session["water"] = get_user_water(name)
-            session["weight"] = get_user_weight(name)
-            session["meals"] = get_user_meals(name)
-            session["workout"] = get_user_workout(name)
-            session["fav_meal"] = get_user_fav_meals(name)
+            global favorite_meals
+            favorite_meals = get_user_fav_meals(name)
             return redirect(url_for("home"))
         else: return "Invalid credentials", 401 
     return render_template("login.html")
@@ -105,11 +77,6 @@ def signin():
             session['username'] = name
             session['profile'] = name[0]
             session["color"] = color
-            session["fav_meals"] = new_user["fav_meals"]
-            session["water"] = new_user["water"]
-            session["weight"] = new_user["weight"]
-            session["meals"] = new_user["meals"]
-            session["workout"] = new_user["workout"]
             users.append(new_user)
             # print(users)
             return redirect(url_for('home'))
@@ -124,7 +91,7 @@ def home():
         username = session["username"]
         profile = session['profile']
         color = session['color']
-        favorite_meals = session['fav_meals']
+        global favorite_meals
         if profile.isalpha():
             profile = profile.upper()
         return render_template("home.html", username = username, 
@@ -149,8 +116,8 @@ def weight():
             "date": date
         }
         weight_input.append(response_data)
-        session["weight"] = weight_input
-        print(session["weight"] )
+    
+        print(weight_input )
 
         return jsonify(response_data)
 
@@ -166,7 +133,7 @@ def meals():
                 "time": time,
                 "date" : date
             }
-            session['meals'].append(response_data)
+            meals_list.append(response_data)
             print(meals_list)
             return jsonify(response_data)
 
@@ -207,7 +174,7 @@ def add_meal():
             username = session["username"]
             profile = session['profile']
             color = session['color']
-            favorite_meals = session['fav_meal']
+            global favorite_meals
             if profile.isalpha():
                 profile = profile.upper()
             return  render_template("add_meal.html", username = username,
@@ -220,7 +187,8 @@ def add_meal():
 @app.route("/meal_edited", methods=["POST"])
 def meal_edited():
         data = request.get_json()
-        session["fav_meals"] = data
+        global favorite_meals
+        favorite_meals = data
         print( favorite_meals)
         response_data = {
              "massage": "Favorite meals updated successfully",
@@ -233,10 +201,16 @@ def logout():
      session.pop("username", None)
      session.pop('profile', None)
      session.pop("color", None)
-     session.pop("fav_meals", None)
-     session.pop("water", None)
-     session.pop("weight", None)
-     session.pop("workout", None)
+     global weight_input
+     weight_input = []
+     global meals_list 
+     meals_list = []
+     global water_list 
+     water_list = []
+     global workout_list
+     workout_list = []
+     global favorite_meals
+     favorite_meals = []
      return redirect(url_for("login"))
 
 @app.route("/profile", methods=["GET", "POST"])
@@ -245,11 +219,11 @@ def profile():
         username = session["username"]
         profile = session['profile']
         color = session['color']
-        favorite_meals = session["fav_meals"]
-        weight = session['weight']
-        water = session['water']
-        workout = session['workout']
-        meals = session['meals']
+        global favorite_meals
+        global weight_input
+        global water_list
+        global workout_list
+        global meals_list
         if profile.isalpha():
             profile = profile.upper()
         return render_template("profile.html", username = username, 
@@ -257,10 +231,10 @@ def profile():
                                color = color, 
                                fav_meals = favorite_meals,
                                date = datetime.today().strftime('%Y-%m-%d'),
-                               weight =weight,
-                               water = water,
-                               workout = workout,
-                               meals = meals
+                               weight =weight_input,
+                               water =  water_list,
+                               workout = workout_list,
+                               meals = meals_list
                                )
     else: 
         return redirect(url_for("login"))
