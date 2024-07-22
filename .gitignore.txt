@@ -1,2 +1,2 @@
 vene/
-__pychace__
+__pychace__/
