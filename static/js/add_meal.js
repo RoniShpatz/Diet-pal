@@ -71,7 +71,8 @@ function createItemMeal(key, content) {
     inputcontent.classList.add("input-content")
     inputcontent.value = content
 
-    
+    const divSpan = document.createElement("div")
+    divSpan.classList.add("spans-div")
 
     const deleteSpanItem = document.createElement("span");
     deleteSpanItem.innerHTML = "&#10005;";
@@ -81,14 +82,19 @@ function createItemMeal(key, content) {
     submitSpanItem.innerHTML = "&#10004;";
     submitSpanItem.classList.add("submit-item")
 
+    divSpan.appendChild(submitSpanItem)
+    divSpan.appendChild(deleteSpanItem)
+
     listItem.appendChild(paraNameItem);
     listItem.appendChild(contentParaItem);
     listItem.appendChild(inputName );
     listItem.appendChild(inputcontent );
-    listItem.appendChild(submitSpanItem);
-    listItem.appendChild(deleteSpanItem);
+    listItem.appendChild(divSpan);
+    
     return listItem;
 }
+
+let isInputDisplay = false
 
 function createMealList() {
     let count = 0
@@ -104,7 +110,37 @@ function createMealList() {
         const inputContent =document.querySelector(`.list-${count} .input-content`)
         const deleteItem = document.querySelector(`.list-${count} .delet-item`)
         const submitItem = document.querySelector(`.list-${count} .submit-item`)
+        const paraName = document.querySelector(`.list-${count} .para-name`)
+        const paraContent = document.querySelector(`.list-${count} .para-content`)
         const number = count
+        inputName.style.display= "none"
+        inputContent.style.display= "none"
+        if(paraName) {
+            paraName.addEventListener("click", () => {
+                if (!isInputDisplay) {
+                    inputName.style.display= "inline-block"
+                    inputContent.style.display= "inline-block"
+                    isInputDisplay = true;
+                } else {
+                    inputName.style.display= "none"
+                    inputContent.style.display= "none"
+                    isInputDisplay = false
+                }
+            })
+        }
+        if (paraContent) {
+            paraContent.addEventListener("click", () => {
+                if (!isInputDisplay) {
+                    inputName.style.display= "inline-block"
+                    inputContent.style.display= "inline-block"
+                    isInputDisplay = true;
+                } else {
+                    inputName.style.display= "none"
+                    inputContent.style.display= "none"
+                    isInputDisplay = false
+                }  
+            })
+        }
         if (deleteItem) {
             deleteItem.addEventListener("click", () => {
                 deleteItemFormList(number)
@@ -152,7 +188,7 @@ addBtn.addEventListener("click", (e) => {
         let para = document.createElement("p")
         para.classList.add("fill-in-form")
         para.innerText = "Fill in all form, and than press submit"
-        const divContainer = document.querySelector(".div-edit-meals-container")
+        const divContainer = document.querySelector(".edit-meal-div")
         divContainer.appendChild(para)
         setTimeout(() => {
             divContainer.removeChild(para)

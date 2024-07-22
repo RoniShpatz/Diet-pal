@@ -25,16 +25,28 @@ function getSelectorValue() {
     }); return value;
 }
 
+
+function getDate(){
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${day}/ ${month} / ${year}`
+}
+
 weightForm.addEventListener("submit", (e) => {
     let weight = inputNum.value
     let measurement = getSelectorValue()
+    let date = getDate()
     e.preventDefault()
     if (weight && measurement) {
         data = {
             weight: weight,
-            measurement: measurement
+            measurement: measurement,
+            date: date
         }
         dataJson = JSON.stringify(data)
+        console.log(dataJson)
         fetch("/weight", {
             method: "POST",
             headers: {
@@ -82,13 +94,6 @@ function getTime() {
     return `${hours} : ${minutes}`;
 }
 
-function getDate(){
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    return `${day}/ ${month} / ${year}`
-}
 
 function formatTime(input) {
     let value = input.value.replace(/[^0-9]/g, '');
@@ -149,7 +154,7 @@ submitMeal.addEventListener("click", (e) => {
         })
         .then((r)=> r.json()) 
         .then((data) => console.log(data))
-       
+        textMeal.innerHTML = ""
     } else { 
         let para = document.createElement("p")
         para.classList.add("fill-in-form")

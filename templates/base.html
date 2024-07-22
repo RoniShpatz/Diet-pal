@@ -17,11 +17,11 @@
             <ul id="logo-popup" >
                 <li><a href="{{url_for('home')}}">Home</a></li>
                 <li> <a href=#>Support Group</a></li>
-                <li><a href="{{url_for('login')}}">Log out</a></li>
+                <li><a href="{{url_for('logout')}}">Log out</a></li>
             </ul>
         </div>
          <div id="div-username-letter">
-            <a href="#"><div  class="profile-img" style="background-color: {{ color }};"><p id="username-letter">{{profile}}</p></div></a>
+            <a href="{{url_for('profile')}}"><div  class="profile-img" style="background-color: {{ color }};"><p id="username-letter">{{profile}}</p></div></a>
          </div>
        
     </header>

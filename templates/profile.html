@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{name}} Profile{% endblock %}
+{% block main %}
+<hr style="border: 1px dashed {{color}};">
+<div>
+    <h1 class="home-h1" style="color: {{color}};">Hi {{username | title}}, Today is {{date}}  </h1>
+    <div class="profile-meal">
+        {{fav_meals}}
+        {{meals}}
+    {%for meal in meals%}
+      {{meal}} <br>      
+    {%endfor%}
+    </div>
+    <div class="profile-water"></div>
+    <div class="profile-weight"></div>
+    <div class="profile-worout"></div>
+    <div class="profile-btns">
+        <a href="#">Next</a>
+        <a href="#">Frev</a>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+{%endblock%}

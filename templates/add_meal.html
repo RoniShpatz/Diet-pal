@@ -2,8 +2,9 @@
 {% block title %}Add Meal{% endblock %}
 {% block main %}
 <div class="div-edit-meals-container">
-    <h1 style="color: {{color}};"> {{username}}, You can edit Meals:</h1>
-
+    <h1 style="color: {{color}};"> {{username | title}}, You can edit Meals:</h1>
+    <p  class="meal-para-change">To change Meal click on it</p><br>
+    <a href="{{url_for('home')}}">Back</a>
     <form action="edit_meal()" method="POST" class="edit-meal">
           <ul id="list-of-melas">
     
@@ -12,9 +13,11 @@
     
         </ul>
         <div>
-            <div><input placeholder="Meal Name" id="new-meal-name"><span> : </span><input placeholder="Meal content" id="input-new-content">
-                <button type="submit" id="submit-meal">Add</button>
-                <button type="reset" id="reset-mael">reset</button>
+            <div class="edit-meal-div"><input placeholder="Meal Name" id="new-meal-name"><span> : </span><input placeholder="Meal content" id="input-new-content">
+                <div>
+                    <button type="submit" id="submit-meal">&#10004;</button>
+                    <button type="reset" id="reset-mael">&#10005;</button>
+                </div>
             </div>
           </div>
     
