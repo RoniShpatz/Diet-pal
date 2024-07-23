@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-import secrets
+
 from users import users
 from datetime import datetime
 
-secret_key = secrets.token_hex(16)
+secret_key = "my_secret_key"
 
 colors = ["#206A5D", "#81B214", "#FFCC29", "#F58634"]
 
