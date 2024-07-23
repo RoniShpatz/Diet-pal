@@ -31,7 +31,7 @@ function getDate(){
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
-    return `${day}/ ${month} / ${year}`
+    return `${day}/ ${month}/ ${year}`
 }
 
 weightForm.addEventListener("submit", (e) => {
@@ -238,15 +238,12 @@ function getWokoutValue() {
 
 workoutSubmit.addEventListener("click", (e) => {
     let workout = getWokoutValue()
-    if (!workout) {
-        workout = costumInput.value
-    } 
-    let time = getTime()
+    let duration = costumInput.value
     e.preventDefault()
-    if (time && workout) {
+    if (duration && workout) {
         data = {
            workout_type : workout,
-           time:  timeNow.innerHTML,
+           duration:  duration,
            date: getDate()
         }
         dataJson = JSON.stringify(data)

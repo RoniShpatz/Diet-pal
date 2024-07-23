@@ -43,7 +43,7 @@
                     {%endfor%}
                   {%endfor%}
                 </select><br>
-                <a href="{{url_for('add_meal')}}">Edit meals</a>
+                <a href="{{url_for('add_meal')}}">Add/Edit meals</a>
                 <textarea id="iput-meal" name="meal" rows="4" cols="25" placeholder="Write what you ate here:"></textarea><br>
                 <div id="btn-meals">
                   <button type="submit" id="meals-submit-btn">Submit</button>
@@ -96,7 +96,7 @@
                 <img src="../static/images/pilates.png" alt="pilates icon">
               </label>
             </div>
-            <input type="text" id="add-custom-workout">
+            <input type="text" id="add-custom-workout" placeholder="for how long (in min)?">
             <div class="btn-workout">
               <button type="submit" id="add-workout">+</button>
               <button  type="reset" id="reset-workout">-</button>

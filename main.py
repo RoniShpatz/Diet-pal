@@ -144,7 +144,7 @@ def water():
         time = data.get('time')
         date = data.get('date')
         response_data = {
-            "water-form" : water_quantity,
+            "quantity": int(water_quantity),
             "time": time,
             "date" : date
         }
@@ -156,11 +156,11 @@ def water():
 def workout():
         data = request.get_json()
         workout_type = data.get('workout_type')
-        time = data.get('time')
+        duration = data.get('duration')
         date = data.get('date')
         response_data = {
-            "wokout-type" : workout_type,
-            "time": time,
+            "type" : workout_type,
+            "duration": duration,
             "date" : date
         }
         workout_list.append(response_data)
@@ -230,7 +230,7 @@ def profile():
                                profile = profile, 
                                color = color, 
                                fav_meals = favorite_meals,
-                               date = datetime.today().strftime('%Y-%m-%d'),
+                               date = datetime.today().strftime('%d/ %m/ %Y'),
                                weight =weight_input,
                                water =  water_list,
                                workout = workout_list,
