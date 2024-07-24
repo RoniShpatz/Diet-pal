@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 
-from users import users
+from users import users, User
 from datetime import datetime
+import json
 
 secret_key = "my_secret_key"
 
@@ -198,6 +199,8 @@ def meal_edited():
  
 @app.route("/logout")
 def logout():
+     with open("users.json", 'w') as f:
+          json.dump(users, f)
      session.pop("username", None)
      session.pop('profile', None)
      session.pop("color", None)

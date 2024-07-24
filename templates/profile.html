@@ -6,13 +6,17 @@
     <h1 class="home-h1" style="color: {{color}};">Hi {{username | title}}, Today is {{date}}  </h1>
     <div class="profile-meal">
         <h3>Your Meals:</h3>
-        {% for meal in meals %}
-            {% if meal.date == date %}
-                <p> {{meal.time}} - {{meal.meal}}</p>
-            {% else %}
-            <p>No meals yet.</p>
-            {% endif %}
-        {% endfor %}
+        {% if meals%}
+            {% for meal in meals %}
+                {% if meal.date == date %}
+                    <p> {{meal.time}} - {{meal.meal}}</p>
+                {% else %}
+                <p>No meals yet.</p>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+        <p>No meals yet</p>
+        {% endif %}
 
     </div>
     <div class="profile-water">
@@ -33,22 +37,30 @@
     </div>
     <div class="profile-weight">
         <h3>
-        {% for item in weight %}
-            {% if item.date == date %}
-                Your weight Today: {{item.weight_num}}{{item.weight_unit}} <br>
-            {% endif %}
-        {% endfor%}
+        {% if weight %}
+            {% for item in weight %}
+                {% if item.date == date %}
+                    Your weight Today: {{item.weight_num}}{{item.weight_unit}} <br>
+                {% endif %}
+            {% endfor%}
+        {% else %}
+         <p>No weight yet</p>
+         {% endif %}
         </h3>
      
     </div>
     <div class="profile-workout">
 
         <h3>
-            {% for item in workout %}
-                {% if item.date == date %}
-                    Your workout today is {{item.type}} for {{item.duration}} min<br>
-                {% endif %}
-            {% endfor %}
+            {% if workout %}
+                {% for item in workout %}
+                    {% if item.date == date %}
+                        Your workout today is {{item.type}} for {{item.duration}} min<br>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+            <p> No workut yet</p>
+            {% endif %}
         </h3>
     
     </div>
