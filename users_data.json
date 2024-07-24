@@ -1,0 +1,86 @@
+[
+  {
+    "name": "roni",
+    "password": "1234",
+    "color": "#206A5D",
+    "water": [
+      {
+        "quantity": 200,
+        "time": "12 : 10",
+        "date": "24/ 07/ 2024"
+      },
+      {
+        "quantity": 350,
+        "time": "12 : 10",
+        "date": "24/ 07/ 2024"
+      }
+    ],
+    "weight": [
+      {
+        "weight_unit": "kg",
+        "weight_num": "34",
+        "date": "24/ 07/ 2024"
+      }
+    ],
+    "meals": [
+      {
+        "meal": "2 slices of bread",
+        "time": "12 : 10",
+        "date": "24/ 07/ 2024"
+      },
+      {
+        "meal": "Meat with rice and vegtables",
+        "time": "12 : 10",
+        "date": "24/ 07/ 2024"
+      }
+    ],
+    "workout": [
+      {
+        "type": "running",
+        "duration": "56",
+        "date": "24/ 07/ 2024"
+      }
+    ],
+    "fav_meals": [
+      {
+        "Breakfast": "2 slices of bread"
+      },
+      {
+        "Breakfast": "2 slices of bread"
+      },
+      {
+        "Lunch": "Salat"
+      },
+      {
+        "Dinner": "Meat with rice and vegtables"
+      },
+      {
+        "Supper": "tomato soap"
+      }
+    ]
+  },
+  {
+    "name": "w",
+    "password": "1",
+    "color": "#206A5D",
+    "water": [],
+    "weight": [],
+    "meals": [],
+    "workout": [],
+    "fav_meals": [
+      {
+        "Breakfast": "2 slices of bread"
+      },
+      {
+        "Lunch": "Salat"
+      },
+      {
+        "Dinner": "Chicken with rice and vegtables"
+      },
+      {
+        "Supper": "tomato soap"
+      }
+    ]
+  }
+
+]

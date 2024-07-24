@@ -15,7 +15,7 @@ workout_list =[]
 favorite_meals = []
 
 # declaring users from json file to get permanent and  persistence
-with open('users.json', 'r') as f:
+with open("users_data.json" , 'r') as f:
         users = json.load(f)
 
 app = Flask(__name__)
@@ -71,6 +71,7 @@ def check_user_name(username):
         if user['name'] == username:
             return True
         else: return False
+
 def update_user_lists(username):
     for user in users:
         if user['name'] == username:
@@ -117,7 +118,7 @@ def signin():
         color = request.form.get("color")
         isUniq = check_user_name(name)
         # print(color)
-        if password == password2 and color and isUniq:
+        if password == password2 and color and isUniq == False :
             new_user = {"name": name, "password": password, "color": color,
                             "water": [],
                             "weight": [],
@@ -253,7 +254,7 @@ def meal_edited():
 def logout():
      username = session["username"]
      update_user_lists(username)
-     with open("users.json", 'w') as f:
+     with open('users_data.json', 'w') as f:
           json.dump(users, f)
      session.pop("username", None)
      session.pop('profile', None)
