@@ -28,6 +28,9 @@
                                 {% if password2_error %}
                                 <p >Passwords do not match. Please try again.</p>
                                 {% endif %}
+                                {% if name %}
+                                <p>Username already exists</p>
+                                {% endif %}
                             </div>
                             <p> Choose color</p>
                             <div class="color-thumbnails">

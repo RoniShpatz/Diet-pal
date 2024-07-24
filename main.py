@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 
-from users import users, User
+
 from datetime import datetime
 import json
 
@@ -14,6 +14,9 @@ water_list = []
 workout_list =[]
 favorite_meals = []
 
+# declaring users from json file to get permanent and  persistence
+with open('users.json', 'r') as f:
+        users = json.load(f)
 
 app = Flask(__name__)
 
@@ -34,11 +37,47 @@ def get_user_color(username):
     return None 
 
 def get_user_fav_meals(username):
-     for user in users:
-          if user['name'] == username:
-               return user["fav_meals"]
-     return [{"no meals yet": "true"}]
+    for user in users:
+        if user['name'] == username:
+            return user["fav_meals"]
+    return None
 
+def get_user_meals(username):
+    for user in users:
+        if user['name'] == username:
+            return user["meals"]
+    return None
+
+def get_user_water(username):
+    for user in users:
+        if user['name'] == username:
+            return user["water"]
+    return None
+
+def get_user_weight(username):
+    for user in users:
+        if user['name'] == username:
+            return user["weight"]
+    return None
+
+def get_user_workout(username):
+    for user in users:
+        if user['name'] == username:
+            return user["workout"]
+    return None
+
+def check_user_name(username):
+    for user in users:
+        if user['name'] == username:
+            return True
+        else: return False
+def update_user_lists(username):
+    for user in users:
+        if user['name'] == username:
+            user['water'] = water_list
+            user['weight'] = weight_input
+            user['meals'] = meals_list
+            user['workout'] = workout_list
 
 @app.route("/")
 def index():
@@ -56,6 +95,15 @@ def login():
             session["color"] = get_user_color(name)
             global favorite_meals
             favorite_meals = get_user_fav_meals(name)
+            global meals_list
+            global weight_input
+            global water_list
+            global workout_list
+            meals_list = get_user_meals(name)
+            water_list = get_user_water(name)
+            meals_list = get_user_meals(name)
+            workout_list = get_user_workout(name)
+            weight_input = get_user_weight(name)
             return redirect(url_for("home"))
         else: return "Invalid credentials", 401 
     return render_template("login.html")
@@ -67,8 +115,9 @@ def signin():
         password = request.form.get("password")
         password2 = request.form.get("password-2")
         color = request.form.get("color")
+        isUniq = check_user_name(name)
         # print(color)
-        if password == password2 and color:
+        if password == password2 and color and isUniq:
             new_user = {"name": name, "password": password, "color": color,
                             "water": [],
                             "weight": [],
@@ -81,8 +130,11 @@ def signin():
             users.append(new_user)
             # print(users)
             return redirect(url_for('home'))
-        else: 
-            return render_template('sign.html', password2_error=True)
+        else:
+            if password != password2:
+                return render_template('sign.html', password2_error=True, name= False)
+            else: return render_template('sign.html', password2_error=False, name= True)
+           
       
     return render_template('sign.html')
 
@@ -199,6 +251,8 @@ def meal_edited():
  
 @app.route("/logout")
 def logout():
+     username = session["username"]
+     update_user_lists(username)
      with open("users.json", 'w') as f:
           json.dump(users, f)
      session.pop("username", None)
