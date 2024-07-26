@@ -821,3 +821,192 @@ header div img{
     bottom: 0;
     width: 80%;
 }
+
+/* profile style */
+
+.profile-flex-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.profile-container {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 10px
+    
+}
+.home-h1{
+    margin-top: 2%;
+}
+.profile-meal-container{
+    grid-column: 1;
+    grid-row: 1/4;
+    background-image: url("../images/sppon copy 2.png");
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-color: rgb(255, 255, 255, 0.6);
+    border-radius: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+    position: relative;
+}
+.profile-meal-container div {
+    position: relative;
+}
+.profile-meal-container form{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+}
+
+.profile-water {
+    grid-column: 2;
+    grid-row: 1;
+    background-color: rgb(255, 255, 255, 0.6);
+    border-radius: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    display: grid;
+    place-items: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    margin: 0;
+}
+
+.profile-water form{
+    position: absolute;
+    left: 30%;
+    top: 64%;
+    width: 100%;
+}
+
+.profile-water h3{
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #81B214;
+}
+.profile-weight {
+   grid-column: 2;
+   grid-row: 2;
+   background-color: rgb(255, 255, 255, 0.6);
+   border-radius: 20px;
+   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column; 
+   position: relative;
+}
+.profile-weight form{
+    position: absolute;
+    left: 30%;
+    top: 64%;
+    width: 100%;
+}
+.profile-weight h3{
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #81B214;
+    z-index: 2;  
+}
+.profile-workout{
+    grid-column: 2;
+    grid-row: 3;
+    
+    background-color: rgb(255, 255, 255, 0.6);
+    border-radius: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    position: relative; 
+ } 
+ .profile-workout form{
+    position: absolute;
+    left: 12%;
+    top: 64%;
+    width: 100%;
+ }
+ .profile-workout h3{
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #F58634;   
+ } 
+.profile-meal-h3{
+    text-align: center;
+    color: #F58634;
+    font-weight: 400;
+    font-size: 1.8rem;
+}
+
+.profile-meal-container div{
+    width: 94%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+.profile-meal-p{
+    width: 90%;
+    padding: 2%;
+    margin-top: 2%;  
+}
+.meal-time{
+    margin-right: 10%;
+
+}
+.profile-btns {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 40%;
+    display: flex;
+    justify-content: space-between;
+    
+}
+.profile-btns button{
+    font-size: 2rem;
+    border: none;
+    background-color: #FFCC29;
+    color: #206A5D;
+    font-weight: 600;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.profile-btns button:hover{
+    background-color: #F58634;
+    color: #FFCC29;
+}
+
+.profile-flex-container input{
+    border: dotted #F58634;
+    border-radius: 10px;
+    background-color: white;
+    padding: 1%;
+    
+}
+.profile-flex-container button[name="action"] {
+    background-color: #81B214;
+    border: none;
+    color: white;
+    padding: 1%;
+    border-radius: 5px;
+}
+.profile-flex-container button[value="Reset"]{
+    background-color: #F58634;
+} 
+.profile-flex-container button[name="action"]:hover {
+    background-color: #206A5D;
+    color: #FFCC29;
+    box-shadow: 0px 9px 30px rgba(255, 149, 5, 0.1);
+}

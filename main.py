@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 
 secret_key = "my_secret_key"
@@ -249,27 +249,19 @@ def meal_edited():
              "data": favorite_meals
         }
         return jsonify(response_data)
- 
-@app.route("/logout")
-def logout():
-     username = session["username"]
-     update_user_lists(username)
-     with open('users_data.json', 'w') as f:
-          json.dump(users, f)
-     session.pop("username", None)
-     session.pop('profile', None)
-     session.pop("color", None)
-     global weight_input
-     weight_input = []
-     global meals_list 
-     meals_list = []
-     global water_list 
-     water_list = []
-     global workout_list
-     workout_list = []
-     global favorite_meals
-     favorite_meals = []
-     return redirect(url_for("login"))
+
+
+
+def format_date(date):
+    return date.strftime('%d/ %m/ %Y')
+
+def day_before(date_str):
+    return (datetime.strptime(date_str, '%d/ %m/ %Y') - timedelta(days=1)).strftime('%d/ %m/ %Y')
+
+def day_after(date_str):
+    return (datetime.strptime(date_str, '%d/ %m/ %Y') + timedelta(days=1)).strftime('%d/ %m/ %Y')
+
+current_day = ""
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
@@ -282,13 +274,19 @@ def profile():
         global water_list
         global workout_list
         global meals_list
+        global is_date_set
+        if 'day_today' not in session:
+            session['day_today'] = datetime.today().strftime('%d/ %m/ %Y')
+
+        date_today = session['day_today']
+        print(date_today)
         if profile.isalpha():
             profile = profile.upper()
         return render_template("profile.html", username = username, 
                                profile = profile, 
                                color = color, 
                                fav_meals = favorite_meals,
-                               date = datetime.today().strftime('%d/ %m/ %Y'),
+                               date = date_today,
                                weight =weight_input,
                                water =  water_list,
                                workout = workout_list,
@@ -297,6 +295,134 @@ def profile():
     else: 
         return redirect(url_for("login"))
 
+
+@app.route("/next", methods=["POST"])
+def next():
+    if 'username' in session:
+        print(session['day_today'])
+        session['day_today'] = day_after(session['day_today'])
+        print(session['day_today'])
+        return redirect (url_for('profile'))
+    else: return redirect(url_for('login'))
+      
+        
+@app.route("/prev", methods=["POST"])
+def prev():
+    if 'username' in session:
+        if 'day_today' in session:
+            session['day_today'] = day_before(session['day_today'])
+            print(session['day_today'])
+        return redirect (url_for('profile'))
+    else: 
+        return redirect(url_for("login")) 
+    
+ 
+@app.route("/delet_weight/<int:weight_id>", methods=["POST", "GET"])
+def delete_weight(weight_id):
+    if 'username' in session:
+        action = request.form.get('action', None)
+        print(action)
+        if action == 'Submit':
+            weight_num = request.form.get('weight_num', None)
+            print(weight_num)
+            if weight_num:
+                if 0 <= weight_id < len(weight_input):
+                    weight_to_change = weight_input[weight_id]
+                    weight_to_change['weight_num'] = weight_num
+                    print(weight_input)
+                else:
+                    raise IndexError("Invalid weight_id")         
+        elif action == "Reset":
+            if 0 <= weight_id < len(weight_input):
+                weight_input.pop(weight_id)
+            else: IndexError("Invalid weight_id")
+        return redirect(url_for("profile"))
+    else: 
+        return redirect(url_for("login")) 
+
+@app.route("/delet_meal/<int:meal_id>", methods=["POST", "GET"])
+def delete_meal(meal_id):
+    if 'username' in session:
+        action = request.form.get('action', None)
+        # print(action)
+        if action == 'Submit':
+            meal_time = request.form.get('meal_time', None)
+            meal_content = request.form.get('meal_content', None)
+            if meal_time and meal_content:
+                if 0 <= meal_id < len(meals_list):
+                    meal_to_change = meals_list[meal_id]
+                    meal_to_change['meal'] = meal_content
+                    meal_to_change['time'] = meal_time
+                    # print(meals_list)
+                else:
+                    raise IndexError("Invalid weight_id")         
+        elif action == "Reset":
+            if 0 <= meal_id < len(meals_list):
+                meals_list.pop(meal_id)
+            else: IndexError("Invalid meal_id")
+        return redirect(url_for("profile"))
+    else: 
+        return redirect(url_for("login")) 
+
+@app.route("/add_water", methods=["POST", "GET"])
+def add_water():
+    if 'username' in session:
+        water_new_value = request.form.get('water_num', None)
+        new_date_value = session["day_today"]
+        new_time_value = datetime.now().strftime('%H:%M')
+        water_list.append({"quantity": int(water_new_value), "time":new_time_value, "date": new_date_value})
+        return redirect(url_for("profile"))
+    else: 
+        return redirect(url_for("login")) 
+
+@app.route("/edit_workout/<int:workout_id>", methods=["POST", "GET"])
+def edit_workout(workout_id):
+    if 'username' in session:
+        action = request.form.get('action', None)
+        if action == "Submit":
+            new_workout = request.form.get('new_workout', None)
+            new_time_workout = request.form.get('time_workout', None)
+            if new_workout and new_time_workout:
+                if 0 <= workout_id <= len(workout_list):
+                    workout_to_cahnge = workout_list[workout_id]
+                    workout_to_cahnge["type"] = new_workout
+                    workout_to_cahnge["duration"] = new_time_workout
+                    return redirect(url_for("profile"))
+                else:
+                    raise IndexError("Invalid workout_id")  
+        elif action == "Reset":
+            if 0 <= workout_id < len(workout_list):
+                workout_list.pop(workout_id)
+            else:
+                raise IndexError("Invalid workout_id") 
+            return redirect(url_for("profile"))
+    else: 
+        return redirect(url_for("login")) 
+
+
+@app.route("/logout")
+def logout():
+  
+     username = session["username"]
+ 
+     update_user_lists(username)
+     with open('users_data.json', 'w') as f:
+          json.dump(users, f)
+     session.pop("username", None)
+     session.pop('profile', None)
+     session.pop("color", None)
+     session.pop("day_today", None)
+     global weight_input
+     weight_input = []
+     global meals_list 
+     meals_list = []
+     global water_list 
+     water_list = []
+     global workout_list
+     workout_list = []
+     global favorite_meals
+     favorite_meals = []
+     return redirect(url_for("login"))
 
 if __name__ == "__main__":
     app.run(debug = True, port = 8080)

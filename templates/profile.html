@@ -2,72 +2,107 @@
 {% block title %}{{name}} Profile{% endblock %}
 {% block main %}
 <hr style="border: 1px dashed {{color}};">
-<div>
-    <h1 class="home-h1" style="color: {{color}};">Hi {{username | title}}, Today is {{date}}  </h1>
-    <div class="profile-meal">
-        <h3>Your Meals:</h3>
-        {% if meals%}
-            {% for meal in meals %}
-                {% if meal.date == date %}
-                    <p> {{meal.time}} - {{meal.meal}}</p>
+<h1 class="home-h1" style="color: {{color}};">Hi {{username | title}}, Your Diet log for {{date}}  </h1>
+<div class="profile-flex-container">
+    <div class="profile-container">
+        <div class="profile-meal-container">
+            <h3 class="profile-meal-h3">Your Meals:</h3>
+            <div>
+                {% if meals%}
+                    {% for meal in meals %}
+                        {% if meal.date == date %}
+                            <div>
+                                <p class="profile-meal-p {{loop.index}}"> <span class="meal-time">{{meal.time}} </span>  <span>{{meal.meal}}</span></p>
+                                <form method="POST" action="{{url_for('delete_meal', meal_id = loop.index0)}}" class="form-meal f-{{loop.index}}">
+                                    <input type="text" name="meal_time" placeholder="edit time" class="edit-time-meal">
+                                    <input type="text" name="meal_content" placeholder="edit meal">
+                                    <button type="submit" name="action" value="Submit" class="btn-submit-meal {{loop.index}}">&#10004;</button>
+                                    <button type="submit" name="action" value="Reset" class="btn-reset-meal {{loop.index}}">&#10005;</button>
+                                </form><br>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 {% else %}
-                <p>No meals yet.</p>
+                <p>No meals yet</p>
                 {% endif %}
-            {% endfor %}
-        {% else %}
-        <p>No meals yet</p>
-        {% endif %}
-
-    </div>
-    <div class="profile-water">
-        <h3>
-            {% set water_sum = [] %}
-            {% for cup in water %}
-                {% if cup.date == date %}
-                    {% set _ = water_sum.append(cup.quantity) %}
-                {% endif %}
-            {% endfor %}
-            
-            {% if water_sum %}
-               You drunk today {{ water_sum | sum }} ml
-            {% else %}
-                <p>No water yet.</p>
-            {% endif %}
-        </h3>
-    </div>
-    <div class="profile-weight">
-        <h3>
-        {% if weight %}
-            {% for item in weight %}
-                {% if item.date == date %}
-                    Your weight Today: {{item.weight_num}}{{item.weight_unit}} <br>
-                {% endif %}
-            {% endfor%}
-        {% else %}
-         <p>No weight yet</p>
-         {% endif %}
-        </h3>
-     
-    </div>
-    <div class="profile-workout">
-
-        <h3>
-            {% if workout %}
-                {% for item in workout %}
-                    {% if item.date == date %}
-                        Your workout today is {{item.type}} for {{item.duration}} min<br>
+            </div>
+        </div>
+        <div class="profile-water">
+        
+                {% set water_sum = [] %}
+                {% for cup in water %}
+                    {% if cup.date == date %}
+                        {% set _ = water_sum.append(cup.quantity) %}
                     {% endif %}
                 {% endfor %}
+                
+                {% if water_sum %}
+                <h3 class="h3-water">You drunk today {{ water_sum | sum }} ml</h3>
+                <form method="POST" action="{{url_for('add_water')}}" class="water-form">
+                    <input type="number" name="water_num" placeholder="Enter new water ml" >
+                    <button type="submit" name="action" value="Submit">&#10004;</button>
+                    <button type="reset" name="action" value="Reset">&#10005;</button>
+                </form>
+                {% else %}
+                <h3 class="h3-water">Add Water</h3>
+                <form method="POST" action="{{url_for('add_water')}}" class="water-form">
+                    <input type="number" name="water_num" placeholder="Enter new water ml">
+                    <button type="submit" name="action" value="Submit">&#10004;</button>
+                    <button type="reset" name="action" value="Reset">&#10005;</button>
+                </form>
+                {% endif %}
+      
+        </div>
+        <div class="profile-weight">
+        
+            {% if weight %}
+                {% for item in weight %}
+                    {% if item.date == date %}
+                    <h3 class="weight-h3 {{loop.index}}">Your weight Today: {{item.weight_num}}{{item.weight_unit}}</h3> 
+                        <form method="POST" action="{{url_for('delete_weight', weight_id = loop.index0)}}" class="weight-from f-weight-{{loop.index}}">
+                            <input type="number" name="weight_num" placeholder="Edit weight number">
+                            <button type="submit" name="action" value="Submit">&#10004;</button>
+                            <button type="submit" name="action" value="Reset">&#10005;</button>
+                        </form>
+                    {% endif %}
+                {% endfor%}
             {% else %}
-            <p> No workut yet</p>
+            <p> No weight yet</p>
             {% endif %}
-        </h3>
-    
+            
+        
+        </div>
+        <div class="profile-workout">
+
+        
+                {% if workout %}
+                {% for item in workout %}
+                    {% if item.date == date %}
+                    <h3 class="workout-h3 {{loop.index}}"> You workout today in {{item.type}} for {{item.duration}}</h3> <br>
+                        <form method="POST" action="{{url_for('edit_workout', workout_id = loop.index0)}}" class="form-workout f-work-{{loop.index}}">
+                            <input type="text" name="new_workout" placeholder="Edit workout">
+                            <input type="number" name="time_workout" placeholder="Edit time in min">
+                            <button type="submit" name="action" value="Submit">&#10004;</button>
+                            <button type="submit" name="action" value="Reset">&#10005;</button>
+                        </form>
+                    {% endif %}
+                {% endfor%}
+            {% else %}
+            <p> No workout yet</p>
+            {% endif %}
+        
+        
+        </div>
+
     </div>
     <div class="profile-btns">
-        <a href="#">Next</a>
-        <a href="#">Frev</a>
+        <form  action="{{ url_for('prev') }}"  method="POST">
+            <button type="submit" id="prev-date"><</button>
+        </form>
+        <form  action="{{ url_for('next') }}"  method="POST">
+            <button type="submit" id="next-date" >></button>
+        </form>
     </div>
 </div>
-
+<script src="../static/js/profile.js"></script>
 {% endblock %}
