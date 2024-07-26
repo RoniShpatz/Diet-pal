@@ -364,6 +364,52 @@ def delete_meal(meal_id):
     else: 
         return redirect(url_for("login")) 
 
+@app.route("/add_meal_log", methods=["POST", "GET"])
+def add_meal_log():
+    if 'username' in session:
+        if request.method == "POST":
+            time = request.form.get("meal_time")
+            content = request.form.get("meal_content")
+            if time and content:
+                new_date_value = session["day_today"]
+                meals_list.append({"meal": content,
+                                   "time": time,
+                                   "date": new_date_value})
+        return redirect(url_for("profile"))
+    else:
+        return redirect(url_for("login")) 
+
+@app.route("/add_weight_log", methods=["POST", "GET"])
+def add_weight_log():
+    if 'username' in session:
+        if request.method == "POST":
+            weight = request.form.get("weight")
+            unit = request.form.get("weight_unit")
+            date = session["day_today"]
+            if weight and unit:
+                weight_input.append({"weight_num": weight,
+                                     "weight_unit": unit,
+                                     "date": date})
+        return redirect(url_for("profile"))
+    else:
+        return redirect(url_for("login")) 
+
+@app.route("/add_workout_log", methods=["POST", "GET"])
+def add_workout_log():
+    if 'username' in session:
+        if request.method == "POST":
+            workout= request.form.get("new_workout")
+            print(workout)
+            duration = request.form.get("time_workout")
+            date = session["day_today"]
+            if workout and duration:
+                workout_list.append({"type": workout,
+                                     "duration": duration,
+                                     "date": date })
+        return redirect(url_for("profile"))
+    else:
+        return redirect(url_for("login")) 
+
 @app.route("/add_water", methods=["POST", "GET"])
 def add_water():
     if 'username' in session:

@@ -857,6 +857,18 @@ header div img{
     z-index: 3;
     position: relative;
 }
+.profile-meal-container p{
+    text-shadow:
+    0 0 2px #fff,
+    0 0 4px #fff,
+    0 0 6px #fff,
+    0 0 10px rgb(255, 255, 255),
+    0 0 45px rgb(255, 255, 255),
+    0 0 55px rgb(255, 255, 255),
+    0 0 70px rgb(255, 255, 255),
+    0 0 80px rgb(255, 255, 255);
+}
+
 .profile-meal-container div {
     position: relative;
 }
@@ -892,7 +904,13 @@ header div img{
     font-weight: 400;
     font-size: 1.5rem;
     color: #81B214;
+    cursor: pointer;
 }
+
+.profile-water h3:hover{
+    color: #F58634;
+}
+
 .profile-weight {
    grid-column: 2;
    grid-row: 2;
@@ -902,7 +920,8 @@ header div img{
    display: flex;
    justify-content: center;
    align-items: center;
-   flex-direction: column; 
+   flex-direction: column;
+   z-index: 3; 
    position: relative;
 }
 .profile-weight form{
@@ -1010,3 +1029,48 @@ header div img{
     color: #FFCC29;
     box-shadow: 0px 9px 30px rgba(255, 149, 5, 0.1);
 }
+.profile-add-new {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.profile-add-new p {
+display: flex;
+justify-content: center;
+color: #F58634;
+cursor: pointer;
+}
+.profile-add-new p:hover {
+    color: #206A5D;
+   
+}
+
+.profile-add-new-workout p{
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #81B214;
+    cursor: pointer;
+}
+
+.profile-add-new-workout p:hover{
+    color: #F58634;
+}
+
+.profile-add-new-weight p{
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #81B214;
+    cursor: pointer;
+}
+.profile-add-new-weight p:hover{
+    color: #F58634;
+}
+.add-form-weight{
+    left: 0;
+}
+/* .profile-water h3 {
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #81B214;
+} */

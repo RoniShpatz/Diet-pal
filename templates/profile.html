@@ -7,24 +7,32 @@
     <div class="profile-container">
         <div class="profile-meal-container">
             <h3 class="profile-meal-h3">Your Meals:</h3>
-            <div>
-                {% if meals%}
+            <div class="flex-profile-div">
+                    {% if meals%}
                     {% for meal in meals %}
-                        {% if meal.date == date %}
-                            <div>
-                                <p class="profile-meal-p {{loop.index}}"> <span class="meal-time">{{meal.time}} </span>  <span>{{meal.meal}}</span></p>
-                                <form method="POST" action="{{url_for('delete_meal', meal_id = loop.index0)}}" class="form-meal f-{{loop.index}}">
-                                    <input type="text" name="meal_time" placeholder="edit time" class="edit-time-meal">
-                                    <input type="text" name="meal_content" placeholder="edit meal">
-                                    <button type="submit" name="action" value="Submit" class="btn-submit-meal {{loop.index}}">&#10004;</button>
-                                    <button type="submit" name="action" value="Reset" class="btn-reset-meal {{loop.index}}">&#10005;</button>
-                                </form><br>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                <p>No meals yet</p>
-                {% endif %}
+                    {% if meal.date == date %}
+                <div>
+                            <p class="profile-meal-p {{loop.index}} p-{{loop.index}}"> <span class="meal-time">{{meal.time}} </span>  <span>{{meal.meal}}</span></p>
+                            <form method="POST" action="{{url_for('delete_meal', meal_id = loop.index0)}}" class="form-meal f-{{loop.index}}">
+                            <input type="text" name="meal_time" placeholder="edit time" class="edit-time-meal">
+                            <input type="text" name="meal_content" placeholder="edit meal">
+                            <button type="submit" name="action" value="Submit" class="btn-submit-meal {{loop.index}}">&#10004;</button>
+                            <button type="submit" name="action" value="Reset" class="btn-reset-meal {{loop.index}}">&#10005;</button>
+                        </form><br>
+                </div>
+                            {% endif %}
+                        {% endfor %}
+         
+                    {% endif %}
+                <div class="profile-add-new">
+                    <p>Add New Meal</p>
+                    <form method="POST" action="{{url_for('add_meal_log')}}" class="add-form-meal">
+                        <input type="text" name="meal_time" placeholder="add time" class="edit-time-meal">
+                        <input type="text" name="meal_content" placeholder="add meal">
+                        <button type="submit" name="action" value="Submit" class="btn-submit-meal ">&#10004;</button>
+                        <button type="reset" name="action" value="Reset" class="btn-reset-meal ">&#10005;</button>
+                    </form><br>
+                </div>
             </div>
         </div>
         <div class="profile-water">
@@ -54,21 +62,30 @@
       
         </div>
         <div class="profile-weight">
-        
-            {% if weight %}
-                {% for item in weight %}
-                    {% if item.date == date %}
-                    <h3 class="weight-h3 {{loop.index}}">Your weight Today: {{item.weight_num}}{{item.weight_unit}}</h3> 
-                        <form method="POST" action="{{url_for('delete_weight', weight_id = loop.index0)}}" class="weight-from f-weight-{{loop.index}}">
-                            <input type="number" name="weight_num" placeholder="Edit weight number">
-                            <button type="submit" name="action" value="Submit">&#10004;</button>
-                            <button type="submit" name="action" value="Reset">&#10005;</button>
-                        </form>
-                    {% endif %}
-                {% endfor%}
-            {% else %}
-            <p> No weight yet</p>
-            {% endif %}
+            <div class="profile-weight-display"> 
+                {% if weight %}
+                    {% for item in weight %}
+                        {% if item.date == date %}
+                        <h3 class="weight-h3 {{loop.index}}">Your weight Today: {{item.weight_num}}{{item.weight_unit}}</h3> 
+                            <form method="POST" action="{{url_for('delete_weight', weight_id = loop.index0)}}" class="weight-from f-weight-{{loop.index}}">
+                                <input type="number" name="weight_num" placeholder="Edit weight number">
+                                <button type="submit" name="action" value="Submit">&#10004;</button>
+                                <button type="submit" name="action" value="Reset">&#10005;</button>
+                            </form>
+                        {% endif %}
+                    {% endfor%}
+                {% endif %}
+            </div>
+            <div class="profile-add-new-weight">
+                <p>Add New weight</p>
+                <form method="POST" action="{{url_for('add_weight_log')}}" class="add-form-weight">
+                    <input type="text" name="weight" placeholder="edit time" class="edit-time-meal">
+                    <input type="radio" name="weight_unit" value="kg">
+                    <input type="radio" name="weight_unit" value="lb">
+                    <button type="submit" name="action" value="Submit" class="btn-submit-meal ">&#10004;</button>
+                    <button type="submit" name="action" value="Reset" class="btn-reset-meal ">&#10005;</button>
+                </form><br>
+            </div>
             
         
         </div>
@@ -78,7 +95,7 @@
                 {% if workout %}
                 {% for item in workout %}
                     {% if item.date == date %}
-                    <h3 class="workout-h3 {{loop.index}}"> You workout today in {{item.type}} for {{item.duration}}</h3> <br>
+                    <h3 class="workout-h3 {{loop.index}} h3-{{loop.index}}"> You workout today in <span>{{item.type}}</span> for <span>{{item.duration}}</span></h3> <br>
                         <form method="POST" action="{{url_for('edit_workout', workout_id = loop.index0)}}" class="form-workout f-work-{{loop.index}}">
                             <input type="text" name="new_workout" placeholder="Edit workout">
                             <input type="number" name="time_workout" placeholder="Edit time in min">
@@ -87,10 +104,16 @@
                         </form>
                     {% endif %}
                 {% endfor%}
-            {% else %}
-            <p> No workout yet</p>
             {% endif %}
-        
+            <div class="profile-add-new-workout">
+                <p>Add New Workout</p>
+                <form method="POST" action="{{url_for('add_workout_log')}}" class="add-form-workout">
+                    <input type="text" name="new_workout" placeholder="Add workout name" class="edit-time-workout">
+                    <input type="number" name="time_workout" placeholder="Add duration in min">
+                    <button type="submit" name="action" value="Submit" class="btn-submit-meal ">&#10004;</button>
+                    <button type="reset" name="action" value="Reset" class="btn-reset-meal ">&#10005;</button>
+                </form><br>
+            </div>
         
         </div>
 
