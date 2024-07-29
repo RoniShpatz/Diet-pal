@@ -80,8 +80,12 @@
                 <p>Add New weight</p>
                 <form method="POST" action="{{url_for('add_weight_log')}}" class="add-form-weight">
                     <input type="text" name="weight" placeholder="edit time" class="edit-time-meal">
-                    <input type="radio" name="weight_unit" value="kg">
-                    <input type="radio" name="weight_unit" value="lb">
+                    <label for="profile-kg"><input type="radio" name="weight_unit" value="kg" id="profile-kg">
+                        <p id="profile-kg-p">Kg</p>
+                    </label>
+                    <label for="profile-lb"><input type="radio" name="weight_unit" value="lb" id="profile-lb">
+                        <p id="profile-lb-p">Lb</p>
+                    </label>
                     <button type="submit" name="action" value="Submit" class="btn-submit-meal ">&#10004;</button>
                     <button type="submit" name="action" value="Reset" class="btn-reset-meal ">&#10005;</button>
                 </form><br>
@@ -125,6 +129,10 @@
         <form  action="{{ url_for('next') }}"  method="POST">
             <button type="submit" id="next-date" >></button>
         </form>
+    </div>
+
+    <div class="img-banner-add-meal">
+        <img src="../static/images/home-banner-cut.png" alt="food banner" class="bkg-image">
     </div>
 </div>
 <script src="../static/js/profile.js"></script>

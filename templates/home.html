@@ -3,8 +3,22 @@
 {% block main %}
 <div class="home-layout">
     <h1 class="home-h1" style="color: {{color}};">Hi {{username | title}} what would you like to add:  </h1>
+    <div class="menu-small" >
+      <div class="weight-small btn">
+        <a href="#weight-form-div"><h3>Weight</h3></a>
+      </div>
+      <div class="meal-small btn">
+        <a href="#meal-form-div"><h3>Meals</h3></a>
+      </div>
+      <div class="water-small btn">
+        <a href="#water-form-div"><h3>Water</h3></a>
+      </div>
+      <div class="workout-small btn">
+        <a href="#workout-form-div"><h3>Workout</h3></a>
+      </div>
+    </div>
     <div class="add-banner">
-        <div class="weight form">
+        <div class="weight form" id="weight-form-div">
             <h3>Weight</h3>
             <form action="weight()" method="POST" class="weight-form">
               <div>
@@ -24,7 +38,7 @@
                 </div>
             </form>
         </div>
-        <div class="meal form">
+        <div class="meal form" id="meal-form-div">
             <h3>Meals</h3>
             <form action="meals()"  method="POST" class="meals-form">
                 <label for="meals">Choose favorite Meal or write below: (to edit the time press on it)</label><br>
@@ -51,7 +65,7 @@
                 </div>
             </form>
         </div>
-        <div class="water form">
+        <div class="water form" id="water-form-div">
           <h3>Water</h3>
           <p>Choose quantity and press '+'</p>
           <form class="water-form">
@@ -72,9 +86,12 @@
               <button  type="reset" id="reset-water">-</button>
             </div>
           </form>
-          <img src="../static/images/cup-water.png" alt="cup of water" class="water-img-bkg">
+          <div class="water-div-bkg">
+            <img src="../static/images/cup-water.png" alt="cup of water" class="water-img-bkg">
+            <img src="../static/images/cup-water-small.png" alt="cup of water" class="water-img-bkg-small" >
+          </div>
         </div>
-        <div class="workout form">
+        <div class="workout form" id="workout-form-div">
           <h3>Workout</h3>
           <p>Choose workout or add custom one</p>
           <form class="wokout-form">

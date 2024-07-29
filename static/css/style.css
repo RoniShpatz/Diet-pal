@@ -235,6 +235,12 @@ header div img{
     color: #F58634;
     
 }
+
+#logo-menu{
+    width: 100%;
+
+}
+
 #logo-menu:hover{
     filter: drop-shadow(0 0 0.75rem rgb(207, 207, 207)); 
 }
@@ -264,7 +270,7 @@ header div img{
 }
 .img-banner{
     position: absolute;
-    bottom: -25%;
+    bottom: -45%;
     left: 0;
     width: 100%;
     z-index: -4;
@@ -303,10 +309,14 @@ header div img{
 .water {
     position: relative;
 }
-.water-img-bkg {
+.water-div-bkg {
     position: absolute;
     top: 28%;
     z-index: 0;
+}
+.water-img-bkg {
+    width: 100%;
+    height: auto;
 }
 .water-form{
     z-index: 2;
@@ -411,6 +421,138 @@ header div img{
 #btn-weight button:hover{
     background-color: #206A5D;
 }
+.water-img-bkg-small{
+    display: none;
+}
+.menu-small{
+    display: none;
+}
+/* home rsponsive */
+
+@media (max-width: 1196px) {
+   .add-banner{
+    width: 100%;
+   }
+}
+
+@media (max-width: 900px) {
+    .home-layout{
+        overflow: auto;
+    }
+    .add-banner{
+       grid-template-columns: 1fr 1fr 1fr;
+       
+    }
+    .img-banner{
+        bottom: -85%;
+    }
+ }
+ @media (max-width: 750px){
+
+    .add-banner{
+        grid-template-columns: 1fr 1fr ;
+        
+     }
+     .water-img-bkg-small{
+        display: inline-block;
+       
+     }
+     .water-img-bkg{
+        display: none;
+     }
+  
+    .add-banner{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+     }
+     .home-h1{
+        font-size: 2rem;
+     }
+     .img-banner{
+        bottom: -150%;
+    }
+    .add-banner .form{
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding-bottom: 10%;
+    } 
+
+    .meal {
+        padding-bottom: 20% !important;
+    }
+    .img-banner{
+        bottom: -250%;
+    }
+    .menu-small{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        text-align: center;
+        
+    }
+    .menu-small h3{
+        color: #206A5D;
+        font-size: 1.8rem;
+        font-weight: 400;
+       
+    }
+    .menu-small a{
+        text-decoration: none;
+    }
+    .menu-small div{
+        background-color: rgb(255, 255, 255, 0.6);
+        border-radius: 20px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        padding: 2%;
+    }
+    .menu-small a:hover{
+        color: #F58634;
+    }
+    .weight-small {
+        background-image: url(../images/scale.png);
+        background-repeat: no-repeat;
+        background-position: right top;
+    }
+    .meal-small{
+        background-image: url(../images/sppon\ copy\ 2.png);
+        background-repeat: no-repeat;
+        background-position: right top;
+    }
+    .water-small{
+        background-image: url(../images/cup-water-small-menu.png);
+        background-repeat: no-repeat;
+        background-position: right top;
+    }
+    .workout-small{
+        background-image: url(../images/running-small-menu.png);
+        background-repeat: no-repeat;
+        background-position: right top;
+    }
+ }
+
+/* base style responsive */
+@media (max-width: 750px) {
+    #logo-menu{
+        width: 80%;
+    }
+    .profile-img{
+        height: 80px;
+        width: 80px;
+        
+     
+    }
+    #username-letter{
+        font-size: 2.5rem;
+    }
+}
+
+
 
 /* meals style */
 
@@ -521,6 +663,20 @@ header div img{
 #meals-reset-btn:hover{
     background-color: #206A5D;
 }
+
+
+@media (max-width: 900px){
+  .div-edit-meals-container{
+    width: 100% !important; 
+  }  
+}
+
+@media (max-width: 750px){
+    .div-edit-meals-container h1{
+      font-size: 1.5rem !important; 
+    }  
+  }
+
 /* water style */
 
 .water p{
@@ -1074,3 +1230,48 @@ cursor: pointer;
     font-size: 1.5rem;
     color: #81B214;
 } */
+.add-form-weight input[type="radio"]{
+    visibility: hidden;
+  
+}
+.add-form-weight label{
+    position: relative;
+}
+.add-form-weight label p{
+    display: inline;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 1.2rem;
+    margin: 1%;
+}
+#profile-kg-p {
+    color: #81B214;
+}
+#profile-lb-p {
+    color: #F58634;
+}
+
+.add-form-weight input:checked  + p{
+    text-shadow: 2px 1px 2px #FFCC29;
+    color: #206A5D !important;
+}
+.add-form-weight label p:hover{
+    text-shadow: 2px 1px 2px #FFCC29;
+}
+
+/* profile style responsive */
+
+@media (max-width: 800px) {
+.profile-container{
+    width: 100%;
+    display: flex ;
+    flex-direction: column;
+
+}
+.profile-btns {
+    top: 30%;
+    z-index: 5;
+}
+
+}

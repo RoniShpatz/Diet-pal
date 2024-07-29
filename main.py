@@ -72,13 +72,7 @@ def check_user_name(username):
             return True
         else: return False
 
-def update_user_lists(username):
-    for user in users:
-        if user['name'] == username:
-            user['water'] = water_list
-            user['weight'] = weight_input
-            user['meals'] = meals_list
-            user['workout'] = workout_list
+
 
 @app.route("/")
 def index():
@@ -170,7 +164,8 @@ def weight():
             "date": date
         }
         weight_input.append(response_data)
-    
+        with open('users_data.json', 'w') as f:
+            json.dump(users, f)
         print(weight_input )
 
         return jsonify(response_data)
@@ -188,6 +183,8 @@ def meals():
                 "date" : date
             }
             meals_list.append(response_data)
+            with open('users_data.json', 'w') as f:
+                json.dump(users, f)
             print(meals_list)
             return jsonify(response_data)
 
@@ -203,6 +200,8 @@ def water():
             "date" : date
         }
         water_list.append(response_data)
+        with open('users_data.json', 'w') as f:
+          json.dump(users, f)
         print(water_list)
         return jsonify(response_data)
 
@@ -218,6 +217,8 @@ def workout():
             "date" : date
         }
         workout_list.append(response_data)
+        with open('users_data.json', 'w') as f:
+          json.dump(users, f)
         print(workout_list)
         return jsonify(response_data)
 
@@ -243,6 +244,8 @@ def meal_edited():
         data = request.get_json()
         global favorite_meals
         favorite_meals = data
+        with open('users_data.json', 'w') as f:
+          json.dump(users, f)
         print( favorite_meals)
         response_data = {
              "massage": "Favorite meals updated successfully",
@@ -274,7 +277,7 @@ def profile():
         global water_list
         global workout_list
         global meals_list
-        global is_date_set
+        
         if 'day_today' not in session:
             session['day_today'] = datetime.today().strftime('%d/ %m/ %Y')
 
@@ -329,12 +332,16 @@ def delete_weight(weight_id):
                 if 0 <= weight_id < len(weight_input):
                     weight_to_change = weight_input[weight_id]
                     weight_to_change['weight_num'] = weight_num
-                    print(weight_input)
+                    with open('users_data.json', 'w') as f:
+                        json.dump(users, f)
+                    # print(weight_input)
                 else:
                     raise IndexError("Invalid weight_id")         
         elif action == "Reset":
             if 0 <= weight_id < len(weight_input):
                 weight_input.pop(weight_id)
+                with open('users_data.json', 'w') as f:
+                    json.dump(users, f)
             else: IndexError("Invalid weight_id")
         return redirect(url_for("profile"))
     else: 
@@ -353,12 +360,16 @@ def delete_meal(meal_id):
                     meal_to_change = meals_list[meal_id]
                     meal_to_change['meal'] = meal_content
                     meal_to_change['time'] = meal_time
+                    with open('users_data.json', 'w') as f:
+                        json.dump(users, f)
                     # print(meals_list)
                 else:
                     raise IndexError("Invalid weight_id")         
         elif action == "Reset":
             if 0 <= meal_id < len(meals_list):
                 meals_list.pop(meal_id)
+                with open('users_data.json', 'w') as f:
+                    json.dump(users, f)
             else: IndexError("Invalid meal_id")
         return redirect(url_for("profile"))
     else: 
@@ -375,6 +386,8 @@ def add_meal_log():
                 meals_list.append({"meal": content,
                                    "time": time,
                                    "date": new_date_value})
+                with open('users_data.json', 'w') as f:
+                    json.dump(users, f)
         return redirect(url_for("profile"))
     else:
         return redirect(url_for("login")) 
@@ -390,6 +403,8 @@ def add_weight_log():
                 weight_input.append({"weight_num": weight,
                                      "weight_unit": unit,
                                      "date": date})
+                with open('users_data.json', 'w') as f:
+                    json.dump(users, f)
         return redirect(url_for("profile"))
     else:
         return redirect(url_for("login")) 
@@ -406,6 +421,8 @@ def add_workout_log():
                 workout_list.append({"type": workout,
                                      "duration": duration,
                                      "date": date })
+                with open('users_data.json', 'w') as f:
+                    json.dump(users, f)
         return redirect(url_for("profile"))
     else:
         return redirect(url_for("login")) 
@@ -417,6 +434,8 @@ def add_water():
         new_date_value = session["day_today"]
         new_time_value = datetime.now().strftime('%H:%M')
         water_list.append({"quantity": int(water_new_value), "time":new_time_value, "date": new_date_value})
+        with open('users_data.json', 'w') as f:
+            json.dump(users, f)
         return redirect(url_for("profile"))
     else: 
         return redirect(url_for("login")) 
@@ -433,12 +452,16 @@ def edit_workout(workout_id):
                     workout_to_cahnge = workout_list[workout_id]
                     workout_to_cahnge["type"] = new_workout
                     workout_to_cahnge["duration"] = new_time_workout
+                    with open('users_data.json', 'w') as f:
+                        json.dump(users, f)
                     return redirect(url_for("profile"))
                 else:
                     raise IndexError("Invalid workout_id")  
         elif action == "Reset":
             if 0 <= workout_id < len(workout_list):
                 workout_list.pop(workout_id)
+                with open('users_data.json', 'w') as f:
+                    json.dump(users, f)
             else:
                 raise IndexError("Invalid workout_id") 
             return redirect(url_for("profile"))
@@ -451,7 +474,7 @@ def logout():
   
      username = session["username"]
  
-     update_user_lists(username)
+    #  update_user_lists(username)
      with open('users_data.json', 'w') as f:
           json.dump(users, f)
      session.pop("username", None)
