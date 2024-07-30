@@ -5,9 +5,7 @@ body{
     position: relative;
     font-family: "Roboto Flex", sans-serif;
     perspective: 100px;
-    
- 
-    
+
 }
 
 .login-body{
@@ -960,6 +958,7 @@ header div img{
     padding: 1%;
     border-radius: 10px;
     background-color: white;
+    
 }
 .edit-meal-div #new-meal-name{
     width: 35%;
@@ -1001,6 +1000,11 @@ header div img{
     left: 0;
     bottom: 0;
     width: 80%;
+}
+@media (max-width: 500px) {
+    .div-edit-meals-container li .input-content {
+        width: 40%;
+    }  
 }
 
 /* profile style */
@@ -1313,7 +1317,7 @@ cursor: pointer;
     z-index: 5;
 }
 .profile-weight form{
-    left: 10%;
+    left: 2%;
 }
 .profile-water form {
     left: 12%;
