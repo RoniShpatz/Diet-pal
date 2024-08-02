@@ -4,6 +4,18 @@
 <hr style="border: 1px dashed {{color}};">
 <h1 class="home-h1" style="color: {{color}};">Hi {{username | title}}, Your Diet log for {{date}}  </h1>
 <div class="profile-flex-container">
+    <div class="week-display-div">
+        <a href="{{url_for('display_week')}}">Week Display</a>
+
+     </div>
+    <div class="profile-btns">
+        <form  action="{{ url_for('prev') }}"  method="POST">
+            <button type="submit" id="prev-date"><</button>
+        </form>
+        <form  action="{{ url_for('next') }}"  method="POST">
+            <button type="submit" id="next-date" >></button>
+        </form>
+    </div>
     <div class="profile-container">
         <div class="profile-meal-container">
             <h3 class="profile-meal-h3">Your Meals:</h3>
@@ -14,7 +26,7 @@
                 <div>
                             <p class="profile-meal-p {{loop.index}} p-{{loop.index}}"> <span class="meal-time">{{meal.time}} </span>  <span>{{meal.meal}}</span></p>
                             <form method="POST" action="{{url_for('delete_meal', meal_id = loop.index0)}}" class="form-meal f-{{loop.index}}">
-                            <input type="text" name="meal_time" placeholder="edit time" class="edit-time-meal">
+                            <input type="text" name="meal_time" placeholder="00:00" class="edit-time-meal"  size="5">
                             <input type="text" name="meal_content" placeholder="edit meal">
                             <button type="submit" name="action" value="Submit" class="btn-submit-meal {{loop.index}}">&#10004;</button>
                             <button type="submit" name="action" value="Reset" class="btn-reset-meal {{loop.index}}">&#10005;</button>
@@ -27,11 +39,20 @@
                 <div class="profile-add-new">
                     <p>Add New Meal</p>
                     <form method="POST" action="{{url_for('add_meal_log')}}" class="add-form-meal">
-                        <input type="text" name="meal_time" placeholder="add time" class="edit-time-meal">
-                        <input type="text" name="meal_content" placeholder="add meal">
+                        <select name="fave_meal" class="profile-fav-meals">
+                            {%for meal in fav_meals %}
+                            {%for meal_name, meal_value in meal.items()%}
+                              <option value="{{meal_value}}" >{{meal_name}}</option>
+                            {%endfor%}
+                          {%endfor%}
+                        </select>
+                        <a href="{{url_for('add_meal')}}">Add/Edit Favorite Meals</a><br>
+                        <input type="text" name="meal_time" placeholder="00:00" class="edit-time-meal" size="5">
+                        <input type="text" name="meal_content" placeholder="add meal" id="profile-meal-input">
                         <button type="submit" name="action" value="Submit" class="btn-submit-meal ">&#10004;</button>
                         <button type="reset" name="action" value="Reset" class="btn-reset-meal ">&#10005;</button>
                     </form><br>
+                 
                 </div>
             </div>
         </div>
@@ -99,7 +120,7 @@
                 {% if workout %}
                 {% for item in workout %}
                     {% if item.date == date %}
-                    <h3 class="workout-h3 {{loop.index}} h3-{{loop.index}}"> You workout today in <span>{{item.type}}</span> for <span>{{item.duration}}</span></h3> <br>
+                    <h3 class="workout-h3 {{loop.index}} h3-{{loop.index}}"> You workout today in <span>{{item.type}}</span> for <span>{{item.duration}} min</span></h3> 
                         <form method="POST" action="{{url_for('edit_workout', workout_id = loop.index0)}}" class="form-workout f-work-{{loop.index}}">
                             <input type="text" name="new_workout" placeholder="Edit workout">
                             <input type="number" name="time_workout" placeholder="Edit time in min">
@@ -122,14 +143,7 @@
         </div>
 
     </div>
-    <div class="profile-btns">
-        <form  action="{{ url_for('prev') }}"  method="POST">
-            <button type="submit" id="prev-date"><</button>
-        </form>
-        <form  action="{{ url_for('next') }}"  method="POST">
-            <button type="submit" id="next-date" >></button>
-        </form>
-    </div>
+
 
     <div class="img-banner-add-meal">
         <img src="../static/images/home-banner-cut.png" alt="food banner" class="bkg-image">

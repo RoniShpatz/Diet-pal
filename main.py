@@ -154,7 +154,7 @@ def home():
 def weight():
     if request.method == 'POST':
         data = request.get_json()
-        print(data)
+        # print(data)
         weight_unit = data.get('weight')
         measurement = data.get('measurement')
         date = data.get('date')
@@ -166,7 +166,7 @@ def weight():
         weight_input.append(response_data)
         with open('users_data.json', 'w') as f:
             json.dump(users, f)
-        print(weight_input )
+        # print(weight_input )
 
         return jsonify(response_data)
 
@@ -185,7 +185,7 @@ def meals():
             meals_list.append(response_data)
             with open('users_data.json', 'w') as f:
                 json.dump(users, f)
-            print(meals_list)
+            # print(meals_list)
             return jsonify(response_data)
 
 @app.route("/water", methods = ["POST"])
@@ -202,7 +202,7 @@ def water():
         water_list.append(response_data)
         with open('users_data.json', 'w') as f:
           json.dump(users, f)
-        print(water_list)
+        # print(water_list)
         return jsonify(response_data)
 
 @app.route("/workout", methods = ["POST"])
@@ -219,7 +219,7 @@ def workout():
         workout_list.append(response_data)
         with open('users_data.json', 'w') as f:
           json.dump(users, f)
-        print(workout_list)
+        # print(workout_list)
         return jsonify(response_data)
 
 
@@ -246,7 +246,7 @@ def meal_edited():
         favorite_meals = data
         with open('users_data.json', 'w') as f:
           json.dump(users, f)
-        print( favorite_meals)
+        # print( favorite_meals)
         response_data = {
              "massage": "Favorite meals updated successfully",
              "data": favorite_meals
@@ -282,7 +282,7 @@ def profile():
             session['day_today'] = datetime.today().strftime('%d/ %m/ %Y')
 
         date_today = session['day_today']
-        print(date_today)
+        # print(date_today)
         if profile.isalpha():
             profile = profile.upper()
         return render_template("profile.html", username = username, 
@@ -302,9 +302,9 @@ def profile():
 @app.route("/next", methods=["POST"])
 def next():
     if 'username' in session:
-        print(session['day_today'])
+        # print(session['day_today'])
         session['day_today'] = day_after(session['day_today'])
-        print(session['day_today'])
+        # print(session['day_today'])
         return redirect (url_for('profile'))
     else: return redirect(url_for('login'))
       
@@ -314,7 +314,7 @@ def prev():
     if 'username' in session:
         if 'day_today' in session:
             session['day_today'] = day_before(session['day_today'])
-            print(session['day_today'])
+            # print(session['day_today'])
         return redirect (url_for('profile'))
     else: 
         return redirect(url_for("login")) 
@@ -324,10 +324,10 @@ def prev():
 def delete_weight(weight_id):
     if 'username' in session:
         action = request.form.get('action', None)
-        print(action)
+        # print(action)
         if action == 'Submit':
             weight_num = request.form.get('weight_num', None)
-            print(weight_num)
+            # print(weight_num)
             if weight_num:
                 if 0 <= weight_id < len(weight_input):
                     weight_to_change = weight_input[weight_id]
@@ -414,7 +414,7 @@ def add_workout_log():
     if 'username' in session:
         if request.method == "POST":
             workout= request.form.get("new_workout")
-            print(workout)
+            # print(workout)
             duration = request.form.get("time_workout")
             date = session["day_today"]
             if workout and duration:
@@ -468,6 +468,92 @@ def edit_workout(workout_id):
     else: 
         return redirect(url_for("login")) 
 
+def get_week_dates(start_date):
+    start_date = datetime.strptime(start_date, '%d/ %m/ %Y')
+    monday = start_date - timedelta(days=start_date.weekday())
+    week_days = []
+    for i in range(7):
+        current_day = monday + timedelta(days=i)
+        day_name = current_day.strftime('%A')
+        day_to_append = {"day_name": day_name, 'day_date': current_day.strftime('%d/ %m/ %Y')}
+        month_name = current_day.strftime('%B')
+        week_days.append(day_to_append)
+    return week_days, month_name
+
+
+
+@app.route("/display_week")
+def display_week():
+    if 'username' in session:
+        username = session["username"]
+        profile = session['profile']
+        color = session['color']
+        global favorite_meals
+        global weight_input
+        global water_list
+        global workout_list
+        global meals_list
+        
+        if 'day_today' not in session:
+            session['day_today'] = datetime.today().strftime('%d/ %m/ %Y')
+
+        date_today = session['day_today']
+        # print(date_today)
+        week_days, month = get_week_dates(date_today)
+        if profile.isalpha():
+            profile = profile.upper()
+        return render_template("week_display.html", username = username, 
+                               profile = profile, 
+                               color = color, 
+                               fav_meals = favorite_meals,
+                               date = date_today,
+                               week_days = week_days,
+                               weight =weight_input,
+                               water =  water_list,
+                               workout = workout_list,
+                               meals = meals_list,
+                               month = month
+                               )
+    else: 
+        return redirect(url_for("login"))
+    
+
+@app.route("/next_week", methods=["POST"])
+def next_week():
+    if 'username' in session:
+        if 'day_today' not in session:
+            session['day_today'] = datetime.today().strftime('%d/ %m/ %Y')
+        date_today = session['day_today']
+        start_day = datetime.strptime(date_today, '%d/ %m/ %Y')
+        next_week_start_date = start_day + timedelta(weeks=1)
+        session['day_today'] = next_week_start_date.strftime('%d/ %m/ %Y')
+        return redirect(url_for("display_week"))
+    else: 
+        return redirect(url_for("login"))
+
+@app.route("/prev_week", methods=["POST"])
+def prev_week():
+    if 'username' in session:
+        if 'day_today' not in session:
+            session['day_today'] = datetime.today().strftime('%d/ %m/ %Y')
+        date_today = session['day_today']
+        start_day = datetime.strptime(date_today, '%d/ %m/ %Y')
+        prev_week_start_date = start_day - timedelta(weeks=1)
+        session['day_today'] = prev_week_start_date.strftime('%d/ %m/ %Y')
+        return redirect(url_for("display_week"))
+    else: 
+        return redirect(url_for("login"))
+
+@app.route("/go_to_date/<path:date_now>", methods=["POST", "GET"])
+def go_to_date(date_now):
+    if 'username' in session:
+        if request.method == 'POST':
+         
+            date_from = datetime.strptime(date_now, '%d/ %m/ %Y')
+            session['day_today'] = date_from.strftime('%d/ %m/ %Y')
+        return redirect(url_for("profile"))
+    else:
+         return redirect(url_for("login"))
 
 @app.route("/logout")
 def logout():

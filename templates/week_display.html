@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block main %}
+<hr style="border: 1px dashed {{color}};">
+<h1 class="home-h1" style="color: {{color}};">Hi {{username | title}}, Your Diet log for {{month}}  </h1>
+<div >
+    <div class="day-container">
+        <div class="profile-btns week-btns">
+            <form  action="{{ url_for('prev_week') }}"  method="POST">
+                <button type="submit" id="prev-date"><</button>
+            </form>
+            <form  action="{{ url_for('next_week') }}"  method="POST">
+                <button type="submit" id="next-date" >></button>
+            </form>
+        </div>
+        {% for day in week_days%}
+        <div class="day{{loop.index}}">
+            <div class="week-day-div">
+                <form method="POST" action="{{url_for('go_to_date', date_now = day.day_date )}}" >
+                    <button type="submit">{{day.day_name}}</button>
+                    <button type="submit"> {{day.day_date}}</button>
+                </form>
+                <hr style="border: 1px dashed {{color}};">
+                <div class="week-div-meals">
+                    <h3>Meals</h3>
+                    {% set date_day = day.day_date %}
+                        {% for meal in meals %}
+                            {% if meal.date == date_day %}
+                            <p><span class="week-time">{{meal.time}}:</span>  <span>{{meal.meal}}</span></p>
+                            {% endif %}
+                            {% endfor %}
+                    <hr style="border: 1px dashed {{color}};">
+                </div>
+                <div class="week-water-div">
+                    {% set water_sum = [] %}
+                    {% for cup in water %}
+                        {% if cup.date == date_day %}
+                            {% set _ = water_sum.append(cup.quantity) %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if water_sum %}
+                    <p class="p-water">You drunk today {{ water_sum | sum }} ml</p>
+                    {% else %}
+                    <p class="p-water">No Water Yet</p>
+                    {% endif %}
+                    
+                </div> 
+                <hr style="border: 1px dashed {{color}};">
+                <div class="week-weight">
+                    {% if weight %}
+                    {% for item in weight %}
+                        {% if item.date == date_day %}
+                        <p >Your weight Today: {{item.weight_num}}{{item.weight_unit}}</9> 
+                        {% endif %}
+                    {% endfor%}
+                    {% endif %}
+                   
+                </div>
+                <hr style="border: 1px dashed {{color}};">
+                <div class="week-workout">
+                    {% if workout %}
+                    {% for item in workout %}
+                        {% if item.date == date_day %}
+                        <p class="workout-h3"> You workout today in 
+                            <span>{{item.type}}</span> for 
+                            <span>{{item.duration}}</span></p> <br>
+                            {% endif %}
+                        {% endfor%}
+                    {% endif %}
+                </div>
+            </div>
+
+                    
+            
+        </div>
+       
+        {% endfor %}
+    </div>
+</div>
+
+
+<script src="../static/js/week_display.js"></script>
+
+{%endblock%}

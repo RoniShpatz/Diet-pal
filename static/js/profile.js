@@ -81,7 +81,7 @@ weightH3.forEach(h3 => {
     h3.addEventListener("click", () => {
         let number = h3.classList[1]
         const weightInput = document.getElementsByClassName(`f-weight-${number}`)
-        console.log(weightInput)
+        // console.log(weightInput)
         if (!isWeightClicked) {
             weightInput[0].style.display = "inline-block"
             isWeightClicked = true
@@ -107,13 +107,13 @@ workouttH3.forEach(h3 => {
         const h3Spans = document.querySelectorAll(`.h3-${number} span`)
         const workName = h3Spans[0].innerText
         const time = h3Spans[1].innerText
-        console.log(workName, time)
+        // console.log(workName, time)
         if (!isWorkoutClicked) {
             workouttH3Input[0].style.display = "inline-block";
             const formInput = document.querySelectorAll(`.f-work-${number} input`) 
             formInput[0].value = workName
             formInput[1].value = time
-            console.log(formInput)
+            // console.log(formInput)
             isWorkoutClicked = true;
         } else {
             workouttH3Input[0].style.display = "none";
@@ -143,7 +143,7 @@ const addWeight = document.getElementsByClassName("profile-add-new-weight")
 
 addWeight[0].style.display = "none"
 
-console.log(weightDisplay)
+// console.log(weightDisplay)
 if(weightDisplay.length == 0) {
     addWeight[0].style.display = "block"   
 }
@@ -188,3 +188,13 @@ addNewWorkoutP.addEventListener("click", () => {
     }
 })
 
+const favMeals = document.querySelectorAll(".profile-fav-meals")
+const addMealInput = document.getElementById("profile-meal-input")
+
+
+favMeals.forEach(option => {
+    option.addEventListener("change", () => {
+        addMealInput.value = option.value
+    
+    })
+});

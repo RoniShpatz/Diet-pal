@@ -123,10 +123,12 @@ body{
 .password-btn img{
     border: none;
     background-color: transparent;
+    cursor: pointer;
+    
 }
 .password-btn img:hover{
     filter: saturate(5);
-    cursor: pointer;
+    
 }
 .color-thumbnails {
 margin-bottom: 4%;
@@ -648,7 +650,8 @@ header div img{
 .meals-form a{
     color: #81B214;
     text-decoration: none;
-    margin-bottom: 3%;
+    margin-bottom: 5%;
+    font-size: 1.3rem;
 }
 
 .meals-form a:hover{
@@ -708,8 +711,9 @@ header div img{
 
  .water-size input {
     appearance: none;
-    width: 100px;
+    width: 200px;
     height: 20px;
+   
 }
 .water-size{
     position: relative;
@@ -721,7 +725,7 @@ header div img{
     bottom: -75%;
     font-size: 1.2rem;
     color: #206A5D;
-    text-shadow: #FC0 4px 0 20px; 
+    text-shadow: 0 0 5px white, 0 0 8px #FFCC29;
     border: dotted transparent;
     padding: 2%;
 }
@@ -1028,6 +1032,7 @@ header div img{
 }
 .home-h1{
     margin-top: 2%;
+    margin-bottom: 1%;
 }
 .profile-meal-container{
     grid-column: 1;
@@ -1059,11 +1064,24 @@ header div img{
 }
 .profile-meal-container form{
     position: absolute;
-    left: 0;
-    top: 50%;
+    left: 10%;
+    top: 40%;
     width: 100%;
 }
-
+.profile-meal-container form select {
+    background-color: #FFCC29;
+    border-radius: 15px;
+    color: #206A5D;
+    padding: 1%;
+    margin-bottom: 1%;
+}
+.profile-meal-container form a{
+    text-decoration: none;
+    color: #206A5D;
+}
+.profile-meal-container form a:hover{
+    color: #81B214;
+}
 .profile-water {
     grid-column: 2;
     grid-row: 1;
@@ -1144,7 +1162,10 @@ header div img{
  .profile-workout h3{
     font-weight: 400;
     font-size: 1.5rem;
-    color: #F58634;   
+    color: #F58634;
+    text-align: center;
+
+       
  } 
 .profile-meal-h3{
     text-align: center;
@@ -1171,13 +1192,13 @@ header div img{
     width: 100%;
     position: absolute;
     left: 0;
-    top: 40%;
+    top: 15%;
     display: flex;
     justify-content: space-between;
     
 }
 .profile-btns button{
-    font-size: 2rem;
+    font-size: 4rem;
     border: none;
     background-color: #FFCC29;
     color: #206A5D;
@@ -1254,11 +1275,7 @@ cursor: pointer;
 .add-form-weight{
     left: 0;
 }
-/* .profile-water h3 {
-    font-weight: 400;
-    font-size: 1.5rem;
-    color: #81B214;
-} */
+
 .add-form-weight input[type="radio"]{
     visibility: hidden;
   
@@ -1288,7 +1305,18 @@ cursor: pointer;
 .add-form-weight label p:hover{
     text-shadow: 2px 1px 2px #FFCC29;
 }
-
+.week-display-div{
+    margin-bottom: 1%;
+}
+.week-display-div a{
+text-decoration: none;
+cursor: pointer;
+font-size: 1.2rem;
+color: #F58634;
+}
+.week-display-div a:hover{
+    color: #FFCC29;
+}
 /* profile style responsive */
 
 @media (max-width: 800px) {
@@ -1305,6 +1333,9 @@ cursor: pointer;
     top: 0%;
     z-index: 5;
 }
+.profile-btns button{
+    font-size: 3rem;
+}
 .profile-flex-container input{
     font-size: 1.2rem;
     
@@ -1315,6 +1346,7 @@ cursor: pointer;
 }
 .profile-meal-container form {
     z-index: 5;
+    left: -2%;
 }
 .profile-weight form{
     left: 2%;
@@ -1322,4 +1354,81 @@ cursor: pointer;
 .profile-water form {
     left: 12%;
 }
+.week-display-div {
+    z-index: 10;
+}
+}
+
+/* week_display */
+
+.day-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+
+
+}
+.week-day-div  {
+    background-color: rgb(255, 255, 255, 0.6);
+    border-radius: 20px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
+    padding: 2%;
+}
+.week-day-div form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.week-day-div form button{
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #F58634;
+    cursor: pointer;  
+}
+.week-day-div form button:hover{
+    color: #81B214;
+}
+
+.week-div-meals h3{
+ text-align: center;
+ font-weight: 400;
+ color: #206A5D;
+ font-size: 1rem;
+}
+
+.week-div-meals p{
+    font-size: 0.9rem;
+    display: grid;
+    grid-template-columns: 1fr  2fr;
+    
+}
+.week-time {
+    color: #F58634;
+}
+.week-water-div {
+    color: #81B214;
+text-align: center;
+}
+.week-weight {
+    color: #81B214;
+    text-align: center;
+}
+.week-workout{
+    color: #F58634;
+    text-align: center;
+}
+
+@media (max-width: 800px) {
+    .day-container {
+        grid-template-columns: 1fr;
+        gap: 1px;
+    }
+    .week-btns{
+        position: sticky;
+        height: fit-content;
+        align-items: center;
+        padding-top: 5%;
+    }
 }
