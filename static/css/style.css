@@ -1387,6 +1387,9 @@ color: #F58634;
     color: #F58634;
     cursor: pointer;  
 }
+.week-day-name{
+    font-weight: 600;
+}
 .week-day-div form button:hover{
     color: #81B214;
 }
@@ -1423,12 +1426,19 @@ text-align: center;
 @media (max-width: 800px) {
     .day-container {
         grid-template-columns: 1fr;
-        gap: 1px;
+        gap: 10px;
+       
     }
     .week-btns{
         position: sticky;
         height: fit-content;
         align-items: center;
         padding-top: 5%;
+    }
+    .week-day-name{
+        font-size: 1.2rem !important;
+    }
+    .week-day-div{
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.075);
     }
 }

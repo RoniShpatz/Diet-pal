@@ -17,7 +17,7 @@
         <div class="day{{loop.index}}">
             <div class="week-day-div">
                 <form method="POST" action="{{url_for('go_to_date', date_now = day.day_date )}}" >
-                    <button type="submit">{{day.day_name}}</button>
+                    <button type="submit" class="week-day-name">{{day.day_name}}</button>
                     <button type="submit"> {{day.day_date}}</button>
                 </form>
                 <hr style="border: 1px dashed {{color}};">
