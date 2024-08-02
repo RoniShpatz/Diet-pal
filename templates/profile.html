@@ -2,7 +2,7 @@
 {% block title %}{{name}} Profile{% endblock %}
 {% block main %}
 <hr style="border: 1px dashed {{color}};">
-<h1 class="home-h1" style="color: {{color}};">Hi {{username | title}}, Your Diet log for {{date}}  </h1>
+<h1 class="home-h1" style="color: {{color}};">Hi {{username | title}}, Your Diet log for <span id="profile-date">{{date}}</span>  </h1>
 <div class="profile-flex-container">
     <div class="week-display-div">
         <a href="{{url_for('display_week')}}">Week Display</a>

@@ -196,7 +196,7 @@ sbmitWater.addEventListener("click", (e) => {
            date: getDate()
         }
         dataJson = JSON.stringify(data)
-        console.log(dataJson)
+        // console.log(dataJson)
         fetch("/water", {
             method: "POST",
             headers: {
@@ -247,7 +247,7 @@ workoutSubmit.addEventListener("click", (e) => {
            date: getDate()
         }
         dataJson = JSON.stringify(data)
-        console.log(dataJson)
+        // console.log(dataJson)
         fetch("/workout", {
             method: "POST",
             headers: {
