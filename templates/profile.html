@@ -40,6 +40,7 @@
                     <p>Add New Meal</p>
                     <form method="POST" action="{{url_for('add_meal_log')}}" class="add-form-meal">
                         <select name="fave_meal" class="profile-fav-meals">
+                            <option>Choose favorite meal</option>
                             {%for meal in fav_meals %}
                             {%for meal_name, meal_value in meal.items()%}
                               <option value="{{meal_value}}" >{{meal_name}}</option>

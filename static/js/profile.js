@@ -194,8 +194,9 @@ const addMealInput = document.getElementById("profile-meal-input")
 
 favMeals.forEach(option => {
     option.addEventListener("change", () => {
-        addMealInput.value = option.value
-    
+        if (option.value != "Choose favorite meal"){
+            addMealInput.value = option.value
+        }
     })
 });
 

@@ -51,6 +51,7 @@
                   </div>
                 </div>
                 <select id="fav-meals" name="meals">
+                  <option>Choose favorite meal</option>
                   {%for meal in meals %}
                     {%for meal_name, meal_value in meal.items()%}
                       <option value="{{meal_value}}">{{meal_name}}</option>

@@ -75,7 +75,7 @@ const isStart = false
 
 dropDownMeals.addEventListener("change", () => {
     let mealChosen = dropDownMeals.value
-    if (mealChosen != "add new meal") {
+    if (mealChosen != "Choose favorite meal") {
         textMeal.innerHTML = mealChosen
     }
 })
