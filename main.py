@@ -8,21 +8,16 @@ secret_key = "my_secret_key"
 
 colors = ["#206A5D", "#81B214", "#FFCC29", "#F58634"]
 
-weight_input = []
-meals_list = []
-water_list = []
-workout_list =[]
-favorite_meals = []
-
-# declaring users from json file to get permanent and  persistence
-with open("users_data.json" , 'r') as f:
-        users = json.load(f)
 
 app = Flask(__name__)
 
 app.secret_key = secret_key
 
+# reading json file to get permanent and  persistence and using it to update 
+
 def checkUser(username, password):
+    with open("users_data.json" , 'r') as f:
+        users = json.load(f)
     for name in users:
         if name["name"] == username:
             if name["password"] == password:
@@ -31,48 +26,64 @@ def checkUser(username, password):
     else: return False 
 
 def get_user_color(username):
+    with open("users_data.json" , 'r') as f:
+        users = json.load(f)
     for user in users:
         if user["name"] == username:
             return user["color"]
     return None 
 
 def get_user_fav_meals(username):
+    with open("users_data.json" , 'r') as f:
+        users = json.load(f)
     for user in users:
         if user['name'] == username:
             return user["fav_meals"]
     return None
 
 def get_user_meals(username):
+    with open("users_data.json" , 'r') as f:
+        users = json.load(f)
     for user in users:
         if user['name'] == username:
             return user["meals"]
     return None
 
 def get_user_water(username):
+    with open("users_data.json" , 'r') as f:
+        users = json.load(f)
     for user in users:
         if user['name'] == username:
             return user["water"]
     return None
 
 def get_user_weight(username):
+    with open("users_data.json" , 'r') as f:
+        users = json.load(f)
     for user in users:
         if user['name'] == username:
             return user["weight"]
     return None
 
 def get_user_workout(username):
+    with open("users_data.json" , 'r') as f:
+        users = json.load(f)
     for user in users:
         if user['name'] == username:
             return user["workout"]
     return None
 
 def check_user_name(username):
+    with open("users_data.json" , 'r') as f:
+        users = json.load(f)
     for user in users:
         if user['name'] == username:
             return True
         else: return False
 
 def update_user(username, what_to_update, list):
+    with open("users_data.json" , 'r') as f:
+        users = json.load(f)
     user_found = False
     for user in users:
         if user["name"] == username:
@@ -85,11 +96,7 @@ def update_user(username, what_to_update, list):
             break
     if not user_found:
         print("no user was found")
-     
-        
-
-
-        
+       
 
 @app.route("/")
 def index():
@@ -105,17 +112,6 @@ def login():
             session['username'] = name
             session['profile'] = name[0]
             session["color"] = get_user_color(name)
-            global favorite_meals
-            favorite_meals = get_user_fav_meals(name)
-            global meals_list
-            global weight_input
-            global water_list
-            global workout_list
-            meals_list = get_user_meals(name)
-            water_list = get_user_water(name)
-            meals_list = get_user_meals(name)
-            workout_list = get_user_workout(name)
-            weight_input = get_user_weight(name)
             return redirect(url_for("home"))
         else: return "Invalid credentials", 401 
     return render_template("login.html")
@@ -139,6 +135,8 @@ def signin():
             session['username'] = name
             session['profile'] = name[0]
             session["color"] = color
+            with open("users_data.json" , 'r') as f:
+                users = json.load(f)
             users.append(new_user)
             with open('users_data.json', 'w') as f:
                 json.dump(users, f)
@@ -158,7 +156,7 @@ def home():
         username = session["username"]
         profile = session['profile']
         color = session['color']
-        global favorite_meals
+        favorite_meals = get_user_fav_meals(username)      
         if profile.isalpha():
             profile = profile.upper()
         return render_template("home.html", username = username, 
@@ -182,6 +180,10 @@ def weight():
             "weight_num": weight_unit,
             "date": date
         }
+        weight_input = get_user_weight(session["username"])
+        for unit in weight_input:
+            if unit["date"] == response_data["date"]:
+                weight_input.pop(unit)
         weight_input.append(response_data)
         update_user(session["username"], "weight", weight_input)
         # print(weight_input )
@@ -199,6 +201,7 @@ def meals():
                 "time": time,
                 "date" : date
             }
+            meals_list = get_user_meals(session["username"])
             meals_list.append(response_data)
             update_user(session["username"], "meals", meals_list)
             # print(meals_list)
@@ -215,6 +218,7 @@ def water():
             "time": time,
             "date" : date
         }
+        water_list = get_user_water(session["username"])
         water_list.append(response_data)
         update_user(session["username"], "water", water_list)
         # print(water_list)
@@ -231,6 +235,7 @@ def workout():
             "duration": duration,
             "date" : date
         }
+        workout_list = get_user_workout(session["username"])
         workout_list.append(response_data)
         update_user(session["username"], "workout", workout_list)
         # print(workout_list)
@@ -243,20 +248,20 @@ def add_meal():
             username = session["username"]
             profile = session['profile']
             color = session['color']
-            global favorite_meals
+            fav_meals = get_user_fav_meals(username)
             if profile.isalpha():
                 profile = profile.upper()
             return  render_template("add_meal.html", username = username,
                                      profile = profile, 
                                      color = color, 
-                                     meals = favorite_meals)
+                                     meals = fav_meals)
         else: 
             return redirect(url_for("login"))
         
 @app.route("/meal_edited", methods=["POST"])
 def meal_edited():
         data = request.get_json()
-        global favorite_meals
+       
         favorite_meals = data
         update_user(session["username"], "fav_meals", favorite_meals)
         response_data = {
@@ -284,12 +289,11 @@ def profile():
         username = session["username"]
         profile = session['profile']
         color = session['color']
-        global favorite_meals
-        global weight_input
-        global water_list
-        global workout_list
-        global meals_list
-        
+        fav_meal = get_user_fav_meals(username)
+        meals = get_user_meals(username)
+        workout = get_user_workout(username)
+        water = get_user_water(username)
+        weight = get_user_weight(username)
         if 'day_today' not in session:
             session['day_today'] = datetime.today().strftime('%d/ %m/ %Y')
 
@@ -300,12 +304,12 @@ def profile():
         return render_template("profile.html", username = username, 
                                profile = profile, 
                                color = color, 
-                               fav_meals = favorite_meals,
+                               fav_meals = fav_meal,
                                date = date_today,
-                               weight =weight_input,
-                               water =  water_list,
-                               workout = workout_list,
-                               meals = meals_list
+                               weight = weight,
+                               water =  water,
+                               workout = workout,
+                               meals = meals
                                )
     else: 
         return redirect(url_for("login"))
@@ -337,21 +341,24 @@ def delete_weight(weight_id):
     if 'username' in session:
         action = request.form.get('action', None)
         # print(action)
+        weight_input = get_user_weight(session['username'])
         if action == 'Submit':
             weight_num = request.form.get('weight_num', None)
             # print(weight_num)
+           
+            print(weight_input)
             if weight_num:
                 if 0 <= weight_id < len(weight_input):
                     weight_to_change = weight_input[weight_id]
                     weight_to_change['weight_num'] = weight_num
-                    update_user(session["username"], "wight", weight_input)
+                    update_user(session["username"], "weight", weight_input)
                     # print(weight_input)
                 else:
                     raise IndexError("Invalid weight_id")         
         elif action == "Reset":
             if 0 <= weight_id < len(weight_input):
                 weight_input.pop(weight_id)
-                update_user(session["username"], "wight", weight_input)
+                update_user(session["username"], "weight", weight_input)
             else: IndexError("Invalid weight_id")
         return redirect(url_for("profile"))
     else: 
@@ -362,22 +369,24 @@ def delete_meal(meal_id):
     if 'username' in session:
         action = request.form.get('action', None)
         # print(action)
+        meals_list = get_user_meals(session['username'])
         if action == 'Submit':
             meal_time = request.form.get('meal_time', None)
             meal_content = request.form.get('meal_content', None)
             if meal_time and meal_content:
+                
                 if 0 <= meal_id < len(meals_list):
                     meal_to_change = meals_list[meal_id]
                     meal_to_change['meal'] = meal_content
                     meal_to_change['time'] = meal_time
-                    update_user(session["username"], "meal", meals_list)
-                    # print(meals_list)
+                    update_user(session["username"], "meals", meals_list)
+                    
                 else:
                     raise IndexError("Invalid weight_id")         
         elif action == "Reset":
             if 0 <= meal_id < len(meals_list):
                 meals_list.pop(meal_id)
-                update_user(session["username"], "meal", meals_list)
+                update_user(session["username"], "meals", meals_list)
             else: IndexError("Invalid meal_id")
         return redirect(url_for("profile"))
     else: 
@@ -389,12 +398,13 @@ def add_meal_log():
         if request.method == "POST":
             time = request.form.get("meal_time")
             content = request.form.get("meal_content")
+            meals_list = get_user_meals(session['username'])
             if time and content:
                 new_date_value = session["day_today"]
                 meals_list.append({"meal": content,
                                    "time": time,
                                    "date": new_date_value})
-                update_user(session["username"], "meal", meals_list)
+                update_user(session["username"], "meals", meals_list)
         return redirect(url_for("profile"))
     else:
         return redirect(url_for("login")) 
@@ -407,9 +417,13 @@ def add_weight_log():
             unit = request.form.get("weight_unit")
             date = session["day_today"]
             if weight and unit:
+                weight_input = get_user_weight(session['username'])
                 weight_input.append({"weight_num": weight,
                                      "weight_unit": unit,
                                      "date": date})
+                for unit in weight_input:
+                    if unit["date"] == response_data["date"]:
+                        weight_input.pop(unit)
                 update_user(session["username"], "weight", weight_input)
         return redirect(url_for("profile"))
     else:
@@ -424,10 +438,11 @@ def add_workout_log():
             duration = request.form.get("time_workout")
             date = session["day_today"]
             if workout and duration:
+                workout_list = get_user_workout(session['username'])
                 workout_list.append({"type": workout,
                                      "duration": duration,
                                      "date": date })
-                update_user(session["username"], "weight", weight_input)
+                update_user(session["username"], "workout", workout_list)
         return redirect(url_for("profile"))
     else:
         return redirect(url_for("login")) 
@@ -438,6 +453,7 @@ def add_water():
         water_new_value = request.form.get('water_num', None)
         new_date_value = session["day_today"]
         new_time_value = datetime.now().strftime('%H:%M')
+        water_list = get_user_water(session['username'])
         water_list.append({"quantity": int(water_new_value), "time":new_time_value, "date": new_date_value})
         update_user(session["username"], "water", water_list)
         return redirect(url_for("profile"))
@@ -452,6 +468,7 @@ def edit_workout(workout_id):
             new_workout = request.form.get('new_workout', None)
             new_time_workout = request.form.get('time_workout', None)
             if new_workout and new_time_workout:
+                workout_list = get_user_workout(session['username'])
                 if 0 <= workout_id <= len(workout_list):
                     workout_to_cahnge = workout_list[workout_id]
                     workout_to_cahnge["type"] = new_workout
@@ -491,12 +508,12 @@ def display_week():
         username = session["username"]
         profile = session['profile']
         color = session['color']
-        global favorite_meals
-        global weight_input
-        global water_list
-        global workout_list
-        global meals_list
-        
+     
+        meals = get_user_meals(username)
+        workout = get_user_workout(username)
+        water = get_user_water(username)
+        weight = get_user_weight(username)
+        fav_meal = get_user_fav_meals(username)
         if 'day_today' not in session:
             session['day_today'] = datetime.today().strftime('%d/ %m/ %Y')
 
@@ -508,13 +525,13 @@ def display_week():
         return render_template("week_display.html", username = username, 
                                profile = profile, 
                                color = color, 
-                               fav_meals = favorite_meals,
+                               fav_meals = fav_meal,
                                date = date_today,
                                week_days = week_days,
-                               weight =weight_input,
-                               water =  water_list,
-                               workout = workout_list,
-                               meals = meals_list,
+                               weight =weight,
+                               water =  water,
+                               workout = workout,
+                               meals = meals,
                                month = month
                                )
     else: 
@@ -564,19 +581,10 @@ def logout():
     session.pop('profile', None)
     session.pop("color", None)
     session.pop("day_today", None)
-    global weight_input
-    weight_input = []
-    global meals_list 
-    meals_list = []
-    global water_list 
-    water_list = []
-    global workout_list
-    workout_list = []
-    global favorite_meals
-    favorite_meals = []
+
     return redirect(url_for("login"))
 
 if __name__ == "__main__":
-    app.run(debug = False, port = 8080)
+    app.run(debug = True, port = 8080)
 
 main = app
