@@ -418,12 +418,14 @@ def add_weight_log():
             date = session["day_today"]
             if weight and unit:
                 weight_input = get_user_weight(session['username'])
-                weight_input.append({"weight_num": weight,
+                new = {"weight_num": weight,
                                      "weight_unit": unit,
-                                     "date": date})
+                                     "date": date}
                 for unit in weight_input:
-                    if unit["date"] == response_data["date"]:
+                    if unit["date"] == new["date"]:
                         weight_input.pop(unit)
+                weight_input.append(new)
+
                 update_user(session["username"], "weight", weight_input)
         return redirect(url_for("profile"))
     else:

@@ -1,1 +1,195 @@
-[{"name": "roni", "password": "1234", "color": "#206A5D", "water": [{"quantity": 350, "time": "16 : 32", "date": "06/ 08/ 2024"}], "weight": [{"weight_num": "56", "weight_unit": "kg", "date": "06/ 08/ 2024"}], "meals": [{"meal": "2 slices of bread", "time": "15 : 45", "date": "23/ 07/ 2024"}, {"meal": "Meat with rice and vegtables", "time": "15 : 45", "date": "23/ 07/ 2024"}, {"meal": "tomato soap", "time": "15 : 45", "date": "23/ 07/ 2024"}, {"meal": "2 slices of bread", "time": "15 : 45", "date": "24/ 07/ 2024"}, {"meal": "Meat with rice and vegtables", "time": "15 : 45", "date": "24/ 07/ 2024"}, {"meal": "tomato soap", "time": "15 : 45", "date": "24/ 07/ 2024"}, {"meal": "2 slices of bread", "time": "15 : 45", "date": "25/ 07/ 2024"}, {"meal": "2 slices of bread and coffe", "time": "12:00", "date": "29/ 07/ 2024"}, {"meal": "Chicken with rice and vegtables", "time": "10:12", "date": "29/ 07/ 2024"}, {"meal": "Salat", "time": "12 : 49", "date": "30/ 07/ 2024"}, {"meal": "Meat with rice and vegtables", "time": "10 : 50", "date": "31/ 07/ 2024"}, {"meal": "salt with bean", "time": "12:00", "date": "31/ 07/ 2024"}, {"meal": "2 slices of bread and coffe", "time": "11:23", "date": "01/ 08/ 2024"}, {"meal": "salt with bean", "time": "12:00", "date": "01/ 08/ 2024"}, {"meal": "Meat with rice and vegtables", "time": "12:00", "date": "01/ 08/ 2024"}, {"meal": "Salat", "time": "09 : 57", "date": "02/ 08/ 2024"}, {"meal": "2 slices of bread", "time": "09 : 57", "date": "02/ 08/ 2024"}, {"meal": "Meat with rice and vegtables", "time": "18:30", "date": "02/ 08/ 2024"}, {"meal": "Salat with yogurt and corn.  ", "time": "12 : 06", "date": "02/ 08/ 2024"}, {"meal": "2 slices of bread", "time": "14 : 11", "date": "06/ 08/ 2024"}], "workout": [], "fav_meals": [{"Breakfast": "2 slices of bread"}, {"Lunch": "Salat"}, {"Dinner": "Meat with rice and vegtables"}, {"Supper": "tomato soap"}, {"supper2": "chicken soup"}]}, {"name": "w", "password": "1", "color": "#206A5D", "water": [{"quantity": 200, "time": "15 : 09", "date": "06/ 08/ 2024"}, {"quantity": 344, "time": "15:12", "date": "06/ 08/ 2024"}], "weight": [], "meals": [{"meal": "Chicken with rice and vegtables", "time": "15 : 09", "date": "06/ 08/ 2024"}, {"meal": "Salat", "time": "12:00", "date": "06/ 08/ 2024"}], "workout": [{"type": "running slow", "duration": "56", "date": "06/ 08/ 2024"}], "fav_meals": [{"Breakfast": "2 slices of bread"}, {"Lunch": "Salat"}, {"Dinner": "Chicken with rice and vegtables"}, {"Supper": "tomato soap"}, {"supper2": "chicken soup"}]}, {"name": "new", "password": "1", "color": "#F58634", "water": [{"quantity": 400, "time": "16:05", "date": "06/ 08/ 2024"}, {"quantity": 45, "time": "16:15", "date": "06/ 08/ 2024"}, {"quantity": 350, "time": "16 : 53", "date": "06/ 08/ 2024"}, {"quantity": 350, "time": "18 : 24", "date": "06/ 08/ 2024"}, {"quantity": 76, "time": "18:35", "date": "06/ 08/ 2024"}, {"quantity": -200, "time": "18:35", "date": "06/ 08/ 2024"}], "weight": [{"weight_unit": "kg", "weight_num": "56", "date": "06/ 08/ 2024"}, {"weight_num": "67", "weight_unit": "kg", "date": "07/ 08/ 2024"}], "meals": [{"meal": "ewr", "time": "18 : 21", "date": "06/ 08/ 2024"}, {"meal": "ewrfdg", "time": "14:11 ", "date": "06/ 08/ 2024"}], "workout": [{"type": "running", "duration": "78", "date": "06/ 08/ 2024"}], "fav_meals": [{"er": "er"}, {"roni": "ewr"}, {"wer": "ewr"}]}]
+[
+  {
+    "name": "roni",
+    "password": "1234",
+    "color": "#206A5D",
+    "water": [
+      {
+        "quantity": 350,
+        "time": "16 : 32",
+        "date": "06/ 08/ 2024"
+      }
+    ],
+    "weight": [
+      {
+        "weight_num": "56",
+        "weight_unit": "kg",
+        "date": "06/ 08/ 2024"
+      }
+    ],
+    "meals": [
+      {
+        "meal": "2 slices of bread",
+        "time": "15 : 45",
+        "date": "23/ 07/ 2024"
+      },
+      {
+        "meal": "Meat with rice and vegtables",
+        "time": "15 : 45",
+        "date": "23/ 07/ 2024"
+      },
+      {
+        "meal": "tomato soap",
+        "time": "15 : 45",
+        "date": "23/ 07/ 2024"
+      },
+      {
+        "meal": "2 slices of bread",
+        "time": "15 : 45",
+        "date": "24/ 07/ 2024"
+      },
+      {
+        "meal": "Meat with rice and vegtables",
+        "time": "15 : 45",
+        "date": "24/ 07/ 2024"
+      },
+      {
+        "meal": "tomato soap",
+        "time": "15 : 45",
+        "date": "24/ 07/ 2024"
+      },
+      {
+        "meal": "2 slices of bread",
+        "time": "15 : 45",
+        "date": "25/ 07/ 2024"
+      },
+      {
+        "meal": "2 slices of bread and coffe",
+        "time": "12:00",
+        "date": "29/ 07/ 2024"
+      },
+      {
+        "meal": "Chicken with rice and vegtables",
+        "time": "10:12",
+        "date": "29/ 07/ 2024"
+      },
+      {
+        "meal": "Salat",
+        "time": "12 : 49",
+        "date": "30/ 07/ 2024"
+      },
+      {
+        "meal": "Meat with rice and vegtables",
+        "time": "10 : 50",
+        "date": "31/ 07/ 2024"
+      },
+      {
+        "meal": "salt with bean",
+        "time": "12:00",
+        "date": "31/ 07/ 2024"
+      },
+      {
+        "meal": "2 slices of bread and coffe",
+        "time": "11:23",
+        "date": "01/ 08/ 2024"
+      },
+      {
+        "meal": "salt with bean",
+        "time": "12:00",
+        "date": "01/ 08/ 2024"
+      },
+      {
+        "meal": "Meat with rice and vegtables",
+        "time": "12:00",
+        "date": "01/ 08/ 2024"
+      },
+      {
+        "meal": "Salat",
+        "time": "09 : 57",
+        "date": "02/ 08/ 2024"
+      },
+      {
+        "meal": "2 slices of bread",
+        "time": "09 : 57",
+        "date": "02/ 08/ 2024"
+      },
+      {
+        "meal": "Meat with rice and vegtables",
+        "time": "18:30",
+        "date": "02/ 08/ 2024"
+      },
+      {
+        "meal": "Salat with yogurt and corn.  ",
+        "time": "12 : 06",
+        "date": "02/ 08/ 2024"
+      },
+      {
+        "meal": "2 slices of bread",
+        "time": "14 : 11",
+        "date": "06/ 08/ 2024"
+      }
+    ],
+    "workout": [],
+    "fav_meals": [
+      {
+        "Breakfast": "2 slices of bread"
+      },
+      {
+        "Lunch": "Salat"
+      },
+      {
+        "Dinner": "Meat with rice and vegtables"
+      },
+      {
+        "Supper": "tomato soap"
+      },
+      {
+        "supper2": "chicken soup"
+      }
+    ]
+  },
+  {
+    "name": "w",
+    "password": "1",
+    "color": "#206A5D",
+    "water": [
+      {
+        "quantity": 200,
+        "time": "15 : 09",
+        "date": "06/ 08/ 2024"
+      },
+      {
+        "quantity": 344,
+        "time": "15:12",
+        "date": "06/ 08/ 2024"
+      }
+    ],
+    "weight": [],
+    "meals": [
+      {
+        "meal": "Chicken with rice and vegtables",
+        "time": "15 : 09",
+        "date": "06/ 08/ 2024"
+      },
+      {
+        "meal": "Salat",
+        "time": "12:00",
+        "date": "06/ 08/ 2024"
+      }
+    ],
+    "workout": [
+      {
+        "type": "running slow",
+        "duration": "56",
+        "date": "06/ 08/ 2024"
+      }
+    ],
+    "fav_meals": [
+      {
+        "Breakfast": "2 slices of bread"
+      },
+      {
+        "Lunch": "Salat"
+      },
+      {
+        "Dinner": "Chicken with rice and vegtables"
+      },
+      {
+        "Supper": "tomato soap"
+      },
+      {
+        "supper2": "chicken soup"
+      }
+    ]
+  }
+]
