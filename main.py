@@ -169,6 +169,8 @@ def home():
   
 @app.route("/weight", methods = ["POST"])
 def weight():
+# Create a local API to send data from the frontend to the backend (JavaScript to Python).
+#  This involves preventing the page from refreshing.
     if request.method == 'POST':
         data = request.get_json()
         # print(data)
@@ -181,9 +183,10 @@ def weight():
             "date": date
         }
         weight_input = get_user_weight(session["username"])
-        for unit in weight_input:
-            if unit["date"] == response_data["date"]:
-                weight_input.pop(unit)
+        for index, item in enumerate(weight_input):
+            if item["date"] == response_data["date"]:
+                weight_input.pop(index)
+                break
         weight_input.append(response_data)
         update_user(session["username"], "weight", weight_input)
         # print(weight_input )
@@ -271,7 +274,8 @@ def meal_edited():
         return jsonify(response_data)
 
 
-
+# Ensure the date matches between JavaScript and Python, and handle moving 
+# forward and background on days correctly
 def format_date(date):
     return date.strftime('%d/ %m/ %Y')
 
@@ -289,6 +293,7 @@ def profile():
         username = session["username"]
         profile = session['profile']
         color = session['color']
+        # Getting the data from the JSON file to ensure persistence
         fav_meal = get_user_fav_meals(username)
         meals = get_user_meals(username)
         workout = get_user_workout(username)
@@ -335,12 +340,14 @@ def prev():
     else: 
         return redirect(url_for("login")) 
     
- 
+#  Getting the data from the JSON file to ensure persistence
 @app.route("/delet_weight/<int:weight_id>", methods=["POST", "GET"])
 def delete_weight(weight_id):
     if 'username' in session:
         action = request.form.get('action', None)
-        # print(action)
+
+        # I used the action attribute to recognize which submit button is 
+        # clicked—reset to delete the data and submit to change the edited data.
         weight_input = get_user_weight(session['username'])
         if action == 'Submit':
             weight_num = request.form.get('weight_num', None)
@@ -354,7 +361,7 @@ def delete_weight(weight_id):
                     update_user(session["username"], "weight", weight_input)
                     # print(weight_input)
                 else:
-                    raise IndexError("Invalid weight_id")         
+                    raise IndexError("Invalid weight_id")   
         elif action == "Reset":
             if 0 <= weight_id < len(weight_input):
                 weight_input.pop(weight_id)
@@ -421,9 +428,10 @@ def add_weight_log():
                 new = {"weight_num": weight,
                                      "weight_unit": unit,
                                      "date": date}
-                for unit in weight_input:
-                    if unit["date"] == new["date"]:
-                        weight_input.pop(unit)
+                for index, item in enumerate(weight_input):
+                    if item["date"] == new["date"]:
+                        weight_input.pop(index)
+                        break
                 weight_input.append(new)
 
                 update_user(session["username"], "weight", weight_input)
@@ -489,6 +497,9 @@ def edit_workout(workout_id):
             return redirect(url_for("profile"))
     else: 
         return redirect(url_for("login")) 
+    
+# For the weekly display, calculate the previous week and the next week, starting from 
+# Monday. The display of today’s date is managed on the frontend.
 
 def get_week_dates(start_date):
     start_date = datetime.strptime(start_date, '%d/ %m/ %Y')
@@ -566,6 +577,8 @@ def prev_week():
     else: 
         return redirect(url_for("login"))
 
+# When you press on a date, you can go to the page for that date and edit the data.
+
 @app.route("/go_to_date/<path:date_now>", methods=["POST", "GET"])
 def go_to_date(date_now):
     if 'username' in session:
@@ -587,6 +600,6 @@ def logout():
     return redirect(url_for("login"))
 
 if __name__ == "__main__":
-    app.run(debug = True, port = 8080)
+    app.run(debug = False, port = 8080)
 
 main = app

@@ -56,7 +56,10 @@ weightForm.addEventListener("submit", (e) => {
         })
         .then((r)=> r.json()) 
         .then((data) => console.log(data))
-       
+        weightForm.diabled = true;
+        setTimeout( () => {
+            weightForm.diabled = false;
+        }, 3000)
     } else { 
         let para = document.createElement("p")
         para.classList.add("fill-in-form")
